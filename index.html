@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Tutorial Ganti IP Address Windows - Praktik TKJ</title>
+</head>
+<body>
+
+  <header>
+    <h1>Tutorial Praktik TKJ: Setting IP Static di Windows</h1>
+    <p>Panduan dasar konfigurasi alamat IP jaringan komputer untuk siswa TKJ.</p>
+    <hr>
+  </header>
+
+  <section>
+    <h2>Apa itu IP Static?</h2>
+    <p><b>IP Static</b> adalah alamat IP yang diatur secara manual pada komputer agar alamatnya tetap (tidak berubah-ubah) di dalam jaringan lokal (LAN).</p>
+  </section>
+
+  <section>
+    <h2>Alat dan Bahan</h2>
+    <ul>
+      <li>1 Unit PC / Laptop (Windows 10 / 11)</li>
+      <li>Kabel LAN (Straight) atau koneksi Wi-Fi</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Langkah-Langkah Konfigurasi</h2>
+    <ol>
+      <li>Tekan tombol <b>Windows + R</b> pada keyboard.</li>
+      <li>Ketik <code>ncpa.cpl</code> lalu tekan <b>Enter</b> untuk membuka <i>Network Connections</i>.</li>
+      <li>Klik kanan pada adapter jaringan (<b>Ethernet</b> atau <b>Wi-Fi</b>), lalu pilih <b>Properties</b>.</li>
+      <li>Cari dan klik 2x pada <b>Internet Protocol Version 4 (TCP/IPv4)</b>.</li>
+      <li>Pilih opsi <b>Use the following IP address</b>, lalu masukkan konfigurasi berikut:</li>
+    </ol>
+
+    <pre>
+IP Address          : 192.168.10.2
+Subnet Mask         : 255.255.255.0
+Default Gateway     : 192.168.10.1
+Preferred DNS Server: 8.8.8.8
+    </pre>
+
+    <p>6. Klik <b>OK</b> pada semua jendela untuk menyimpan pengaturan.</p>
+  </section>
+
+  <section>
+    <h2>Cara Pengujian</h2>
+    <ol>
+      <li>Buka <b>Command Prompt (CMD)</b>.</li>
+      <li>Ketik perintah <code>ipconfig</code> untuk memastikan IP sudah berubah.</li>
+      <li>Ketik <code>ping 192.168.10.1</code>. Jika muncul balasan <b>Reply from...</b>, artinya konfigurasi berhasil.</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>Form Pertanyaan / Komentar</h2>
+    <form id="formKomentar">
+      <label>Nama Siswa:</label><br>
+      <input type="text" id="nama" placeholder="Masukkan nama" required><br><br>
+
+      <label>Pertanyaan / Catatan:</label><br>
+      <textarea id="pesan" rows="3" placeholder="Tulis pertanyaan..." required></textarea><br><br>
+
+      <button type="submit">Kirim</button>
+    </form>
+    <p id="status"></p>
+
+    <h3>Daftar Komentar Masuk:</h3>
+    <ul id="daftarKomentar">
+      <li>Memuat komentar...</li>
+    </ul>
+  </section>
+
+  <hr>
+  <footer>
+    <p>&copy; 2026 Modul Praktik TKJ</p>
+  </footer>
+
+  <!-- Library Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  
+  <script>
+    const supabaseUrl = 'bmkzydojbfkiotqrvypm';
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJta3p5ZG9qYmZraW90cXJ2eXBtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTUyNDQzODksImV4cCI6MjExMDgyMDM4OX0.G1BswCoWHqp_WssZPnzaH5tliQrjiZzvKOqJiWOphiM';
+    const db = supabase.createClient(supabaseUrl, supabaseKey);
+
+    async function muatKomentar() {
+      const daftarEl = document.getElementById('daftarKomentar');
+
+      const { data, error } = await db
+        .from('komentar')
+        .select('*')
+        .order('id', { ascending: false });
+
+      if (error) {
+        daftarEl.innerHTML = '<li>Gagal memuat komentar.</li>';
+        return;
+      }
+
+      if (data.length === 0) {
+        daftarEl.innerHTML = '<li>Belum ada komentar.</li>';
+        return;
+      }
+      
+      daftarEl.innerHTML = '';
+      data.forEach(item => {
+        const li = document.createElement('li');
+        li.innerHTML = `<b>${item.nama}</b>: ${item.pesan}`;
+        daftarEl.appendChild(li);
+      });
+    }
+
+    document.getElementById('formKomentar').addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      const namaInput = document.getElementById('nama').value;
+      const pesanInput = document.getElementById('pesan').value;
+      const statusTeks = document.getElementById('status');
+
+      statusTeks.innerText = "Mengirim data...";
+
+      const { error } = await db
+        .from('komentar')
+        .insert([{ nama: namaInput, pesan: pesanInput }]);
+
+      if (error) {
+        statusTeks.innerText = "Gagal mengirim: " + error.message;
+      } else {
+        statusTeks.innerText = "Berhasil! Komentar tersimpan.";
+        document.getElementById('formKomentar').reset();
+        muatKomentar(); // Refresh daftar komentar otomatis
+      }
+    });
+
+    muatKomentar();
+  </script>
+
+</body>
+</html
