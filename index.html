@@ -627,6 +627,41 @@
         .comment-item strong { color: var(--sky-primary); font-size: 0.9rem; }
         .comment-item p { font-size: 0.88rem; color: var(--text-muted); margin-top: 4px; }
 
+        /* Quiz & Timer Styling */
+        .quiz-topbar {
+            position: sticky;
+            top: -10px;
+            z-index: 10;
+            background: var(--modal-bg);
+            padding: 12px 16px;
+            border-radius: 14px;
+            border: 1px solid rgba(14, 165, 233, 0.35);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .timer-badge {
+            background: #e0f2fe;
+            color: #0369a1;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .timer-badge.danger {
+            background: #fee2e2;
+            color: #dc2626;
+            animation: blink 0.8s infinite;
+        }
+
         .quiz-option {
             display: block;
             width: 100%;
@@ -642,8 +677,10 @@
             font-size: 0.9rem;
         }
 
-        .quiz-option:hover { background: var(--sky-light); }
+        .quiz-option:hover:not(:disabled) { background: var(--sky-light); }
         .quiz-option.selected { background: #0ea5e9; color: white; border-color: #0ea5e9; }
+        .quiz-option.correct { background: #22c55e !important; color: white !important; border-color: #16a34a !important; }
+        .quiz-option.wrong { background: #ef4444 !important; color: white !important; border-color: #dc2626 !important; }
 
         footer {
             background: var(--nav-bg);
@@ -658,7 +695,7 @@
             from { transform: scale(1); filter: drop-shadow(0 0 2px #38bdf8); }
             to { transform: scale(1.08); filter: drop-shadow(0 0 8px #0ea5e9); }
         }
-        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
         @keyframes fadeUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
@@ -679,7 +716,7 @@
         </a>
         <div class="nav-actions">
             <button class="btn-outline" onclick="bukaModalKuis()">
-                <i class="fa-solid fa-brain"></i> Kuis TKJ
+                <i class="fa-solid fa-brain"></i> Kuis TKJ (Acak + Timer)
             </button>
             <button class="btn-primary" onclick="bukaModalTambah()">
                 <i class="fa-solid fa-plus"></i> Tambah Materi
@@ -754,12 +791,20 @@
         </div>
     </div>
 
-    <!-- Modal Kuis Interaktif TKJ -->
+    <!-- Modal Kuis Interaktif TKJ (Acak + Timer) -->
     <div class="modal-overlay" id="modalKuisOverlay">
-        <div class="modal-box" style="max-width: 680px;">
-            <button class="close-btn" onclick="tutupModal('modalKuisOverlay')"><i class="fa-solid fa-xmark"></i></button>
-            <span class="category-badge">Uji Kompetensi • TKJ</span>
-            <h2 class="modal-title">Kuis Cepat Praktikum TKJ</h2>
+        <div class="modal-box" style="max-width: 720px;">
+            <button class="close-btn" onclick="tutupModalKuis()"><i class="fa-solid fa-xmark"></i></button>
+            <span class="category-badge">Bank 25 Soal Acak • Waktu 2 Menit</span>
+            <h2 class="modal-title">Uji Kompetensi Praktikum TKJ</h2>
+            
+            <div class="quiz-topbar">
+                <span style="font-size:0.88rem; font-weight:600;" id="quizStatusText">10 Soal Acak • Jawab sebelum waktu habis!</span>
+                <div class="timer-badge" id="quizTimerDisplay">
+                    <i class="fa-solid fa-clock"></i> <span id="timerText">02:00</span>
+                </div>
+            </div>
+
             <div id="quizContainer"></div>
         </div>
     </div>
@@ -1165,34 +1210,34 @@
         ];
 
         // ========================================================
-        // 3. DATA KUIS INTERAKTIF TKJ
+        // 3. BANK 25 SOAL KUIS TKJ LENGKAP (ACAK + TIMER)
         // ========================================================
-        const soalKuisTKJ = [
-            {
-                tanya: "1. Susunan warna Pin 1 dan Pin 2 pada standar kabel jaringan T568B (Straight) adalah...",
-                opsi: ["Putih Hijau - Hijau", "Putih Oranye - Oranye", "Putih Biru - Biru", "Oranye - Putih Oranye"],
-                jawaban: 1
-            },
-            {
-                tanya: "2. Berapa jumlah IP Host valid yang dapat digunakan pada jaringan dengan prefix /26?",
-                opsi: ["30 Host", "62 Host", "126 Host", "254 Host"],
-                jawaban: 1
-            },
-            {
-                tanya: "3. Perintah pada MikroTik RouterOS agar client di jaringan lokal bisa mengakses internet melalui ether1 adalah...",
-                opsi: ["/ip firewall nat add chain=srcnat out-interface=ether1 action=masquerade", "/ip dhcp-server enable all", "/interface bridge add name=internet", "/ip route add gateway=ether2"],
-                jawaban: 0
-            },
-            {
-                tanya: "4. Mode jaringan di Oracle VirtualBox yang membuat VM mendapat alamat IP langsung dari Router/Wi-Fi fisik adalah...",
-                opsi: ["NAT", "Internal Network", "Bridged Adapter", "Host-Only Adapter"],
-                jawaban: 2
-            },
-            {
-                tanya: "5. Port default yang digunakan oleh layanan Remote SSH Server dan Web Server HTTP secara berturut-turut adalah...",
-                opsi: ["Port 21 dan Port 443", "Port 22 dan Port 80", "Port 23 dan Port 8080", "Port 53 dan Port 25"],
-                jawaban: 1
-            }
+        const bankSoalKuisTKJ = [
+            { tanya: "Susunan warna Pin 1 dan Pin 2 pada standar kabel jaringan T568B (Straight) adalah...", opsi: ["Putih Oranye - Oranye", "Putih Hijau - Hijau", "Putih Biru - Biru", "Oranye - Putih Oranye"], benar: "Putih Oranye - Oranye" },
+            { tanya: "Berapa jumlah IP Host valid yang dapat digunakan pada jaringan dengan prefix /26?", opsi: ["62 Host", "30 Host", "126 Host", "254 Host"], benar: "62 Host" },
+            { tanya: "Perintah pada MikroTik RouterOS agar client di jaringan lokal bisa mengakses internet melalui ether1 adalah...", opsi: ["/ip firewall nat add chain=srcnat out-interface=ether1 action=masquerade", "/ip dhcp-server enable all", "/interface bridge add name=internet", "/ip route add gateway=ether2"], benar: "/ip firewall nat add chain=srcnat out-interface=ether1 action=masquerade" },
+            { tanya: "Mode jaringan di Oracle VirtualBox yang membuat VM mendapat alamat IP langsung dari Router/Wi-Fi fisik adalah...", opsi: ["Bridged Adapter", "NAT", "Internal Network", "Host-Only Adapter"], benar: "Bridged Adapter" },
+            { tanya: "Port default yang digunakan oleh layanan Remote SSH Server dan Web Server HTTP secara berturut-turut adalah...", opsi: ["Port 22 dan Port 80", "Port 21 dan Port 443", "Port 23 dan Port 8080", "Port 53 dan Port 25"], benar: "Port 22 dan Port 80" },
+            { tanya: "Skema partisi yang wajib dipilih di Rufus saat menginstal Windows 10 pada motherboard mode UEFI modern adalah...", opsi: ["GPT", "MBR", "EXT4", "FAT16"], benar: "GPT" },
+            { tanya: "Perintah cepat di kotak dialog Run (Win + R) Windows untuk langsung membuka jendela Network Connections adalah...", opsi: ["ncpa.cpl", "devmgmt.msc", "msconfig", "services.msc"], benar: "ncpa.cpl" },
+            { tanya: "Direktori root default tempat menyimpan file HTML/PHP pada web server Apache2 dan Nginx di Ubuntu adalah...", opsi: ["/var/www/html", "/etc/apache2/sites", "/home/www/root", "/usr/local/web"], benar: "/var/www/html" },
+            { tanya: "Kabel UTP tipe Crossover digunakan untuk menghubungkan dua perangkat yang...", opsi: ["Sejenis (misal PC ke PC)", "Berbeda jenis (misal PC ke Switch)", "Berjarak lebih dari 500 meter", "Menggunakan sinyal cahaya optik"], benar: "Sejenis (misal PC ke PC)" },
+            { tanya: "Nilai oktal hak akses Linux 'chmod 755' memberikan izin kepada Owner berupa...", opsi: ["Read, Write, dan Execute (rwx)", "Read dan Write saja (rw-)", "Read dan Execute saja (r-x)", "Read saja (r--)"], benar: "Read, Write, dan Execute (rwx)" },
+            { tanya: "Perintah pada Cisco IOS CLI agar port interface router yang berstatus administratively down menjadi aktif adalah...", opsi: ["no shutdown", "enable interface", "ip up", "active port"], benar: "no shutdown" },
+            { tanya: "Subnet mask dalam bentuk desimal untuk prefix CIDR /27 adalah...", opsi: ["255.255.255.224", "255.255.255.192", "255.255.255.240", "255.255.255.128"], benar: "255.255.255.224" },
+            { tanya: "Alat kerja fiber optik yang berfungsi menyambung dua ujung inti serat kaca dengan peleburan busur listrik adalah...", opsi: ["Fusion Splicer", "Fiber Cleaver", "Optical Power Meter", "Tang Crimping"], benar: "Fusion Splicer" },
+            { tanya: "Layanan DNS Server populer di Linux Ubuntu yang menerjemahkan nama domain ke IP Address adalah...", opsi: ["Bind9", "OpenSSH", "Apache2", "Asterisk"], benar: "Bind9" },
+            { tanya: "Pesan 'Request Timed Out (RTO)' saat melakukan perintah ping menandakan...", opsi: ["Paket dikirim namun tidak ada balasan dari tujuan dalam batas waktu", "Kabel LAN terputus secara fisik dari laptop", "IP Address berhasil terhubung dengan cepat", "DNS Server berhasil menerjemahkan domain"], benar: "Paket dikirim namun tidak ada balasan dari tujuan dalam batas waktu" },
+            { tanya: "Perintah di terminal Linux untuk melihat alamat IP pada setiap interface jaringan adalah...", opsi: ["ip a", "ls -la", "chmod 755", "pwd"], benar: "ip a" },
+            { tanya: "Protokol standar yang digunakan untuk komunikasi panggilan suara pada server VoIP Asterisk berjalan di port...", opsi: ["Port 5060 (SIP)", "Port 22 (SSH)", "Port 80 (HTTP)", "Port 443 (HTTPS)"], benar: "Port 5060 (SIP)" },
+            { tanya: "Chain pada MikroTik Firewall Filter yang digunakan untuk menyaring trafik yang melewati router menuju internet adalah...", opsi: ["forward", "input", "output", "prerouting"], benar: "forward" },
+            { tanya: "Layanan yang memungkinkan server lokal (localhost) di balik NAT ISP dapat diakses lewat link HTTPS publik tanpa IP Public statis adalah...", opsi: ["Cloudflare Tunnel / Ngrok", "DHCP Client", "DNS Cache", "LAN Tester"], benar: "Cloudflare Tunnel / Ngrok" },
+            { tanya: "Kabel kecil dari casing PC yang dihubungkan ke motherboard agar tombol daya depan PC berfungsi adalah...", opsi: ["POWER SW", "HDD LED", "SPEAKER", "SATA DATA"], benar: "POWER SW" },
+            { tanya: "Perintah di Cisco IOS untuk menyimpan seluruh konfigurasi yang sedang berjalan ke NVRAM agar tidak hilang saat router mati adalah...", opsi: ["write memory", "reload", "show running-config", "shutdown"], benar: "write memory" },
+            { tanya: "Berapa jumlah host valid pada jaringan point-to-point dengan prefix /30?", opsi: ["2 Host", "4 Host", "6 Host", "14 Host"], benar: "2 Host" },
+            { tanya: "Perintah CMD di Windows untuk melacak jalur router (hop) yang dilewati paket data menuju server tujuan adalah...", opsi: ["tracert", "ipconfig", "netsh", "arp -a"], benar: "tracert" },
+            { tanya: "Alat ukur fiber optik yang digunakan untuk mengetahui besarnya redaman/daya sinyal cahaya masuk (dBm) adalah...", opsi: ["OPM (Optical Power Meter)", "LAN Tester", "Multimeter", "PoE Injector"], benar: "OPM (Optical Power Meter)" },
+            { tanya: "Perintah Linux untuk menyalin file dari komputer lokal ke server jarak jauh melalui jalur terenkripsi SSH adalah...", opsi: ["scp", "mkdir", "rm -rf", "ping"], benar: "scp" }
         ];
 
         let materiAktifId = null;
@@ -1354,7 +1399,7 @@
         }
 
         // ========================================================
-        // 5. RENDER KARTU, COPY CODE BUTTON, MODAL & KUIS
+        // 5. RENDER KARTU, COPY CODE BUTTON & MODAL
         // ========================================================
         function renderMateri(filterKategori = 'all', keyword = '') {
             const gridEl = document.getElementById('materiGrid');
@@ -1444,31 +1489,97 @@
             document.getElementById(overlayId).classList.remove('active');
         }
 
+        // ========================================================
+        // 6. LOGIKA KUIS ACAK (SHUFFLE SOAL & OPSI) + TIMER
+        // ========================================================
+        let soalAktifKuis = [];
         let jawabanUser = {};
+        let kuisTimerInterval = null;
+        let sisaWaktuDetik = 120; // 2 Menit (120 detik)
+        let kuisSelesai = false;
+
+        function acakArray(arr) {
+            const copy = [...arr];
+            for (let i = copy.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [copy[i], copy[j]] = [copy[j], copy[i]];
+            }
+            return copy;
+        }
+
+        function formatWaktu(detik) {
+            const m = String(Math.floor(detik / 60)).padStart(2, '0');
+            const s = String(detik % 60).padStart(2, '0');
+            return `${m}:${s}`;
+        }
+
         function bukaModalKuis() {
+            clearInterval(kuisTimerInterval);
             jawabanUser = {};
+            kuisSelesai = false;
+            sisaWaktuDetik = 120;
+
+            // Ambil 10 soal acak dari 25 bank soal & acak juga urutan opsi jawabannya
+            soalAktifKuis = acakArray(bankSoalKuisTKJ).slice(0, 10).map(item => ({
+                tanya: item.tanya,
+                opsiAcak: acakArray(item.opsi),
+                benar: item.benar
+            }));
+
+            const timerBadge = document.getElementById('quizTimerDisplay');
+            timerBadge.classList.remove('danger');
+            document.getElementById('timerText').textContent = formatWaktu(sisaWaktuDetik);
+            document.getElementById('quizStatusText').textContent = "10 Soal Acak • Jawab sebelum waktu habis!";
+
             const container = document.getElementById('quizContainer');
-            container.innerHTML = soalKuisTKJ.map((s, idx) => `
+            container.innerHTML = soalAktifKuis.map((s, idx) => `
                 <div class="box-panel" style="margin-top:14px;">
-                    <strong style="font-size:0.95rem;">${s.tanya}</strong>
+                    <strong style="font-size:0.95rem;">${idx + 1}. ${s.tanya}</strong>
                     <div style="margin-top:8px;">
-                        ${s.opsi.map((o, oIdx) => `
+                        ${s.opsiAcak.map((teksOpsi, oIdx) => `
                             <button class="quiz-option" id="q_${idx}_${oIdx}" onclick="pilihJawaban(${idx}, ${oIdx})">
-                                ${String.fromCharCode(65 + oIdx)}. ${o}
+                                ${String.fromCharCode(65 + oIdx)}. ${teksOpsi}
                             </button>
                         `).join('')}
                     </div>
                 </div>
             `).join('') + `
-                <button class="btn-primary" style="width:100%; justify-content:center; margin-top:18px;" onclick="cekSkorKuis()">
-                    <i class="fa-solid fa-check-double"></i> Periksa Nilai Kuis
-                </button>
+                <div style="display:flex; gap:10px; margin-top:18px; flex-wrap:wrap;" id="quizActionButtons">
+                    <button class="btn-primary" style="flex:1; justify-content:center;" onclick="cekSkorKuis(false)">
+                        <i class="fa-solid fa-check-double"></i> Selesai & Lihat Nilai
+                    </button>
+                    <button class="btn-outline" onclick="bukaModalKuis()" title="Acak ulang soal baru">
+                        <i class="fa-solid fa-shuffle"></i> Acak Soal Baru
+                    </button>
+                </div>
                 <div id="hasilKuis" style="margin-top:14px;"></div>
             `;
+
             document.getElementById('modalKuisOverlay').classList.add('active');
+
+            // Jalankan Timer Hitung Mundur
+            kuisTimerInterval = setInterval(() => {
+                sisaWaktuDetik--;
+                document.getElementById('timerText').textContent = formatWaktu(sisaWaktuDetik);
+
+                if (sisaWaktuDetik <= 20) {
+                    timerBadge.classList.add('danger');
+                }
+
+                if (sisaWaktuDetik <= 0) {
+                    clearInterval(kuisTimerInterval);
+                    cekSkorKuis(true);
+                }
+            }, 1000);
+        }
+
+        function tutupModalKuis() {
+            clearInterval(kuisTimerInterval);
+            document.getElementById('modalKuisOverlay').classList.remove('active');
         }
 
         function pilihJawaban(soalIdx, opsiIdx) {
+            if (kuisSelesai) return;
             jawabanUser[soalIdx] = opsiIdx;
             for (let i = 0; i < 4; i++) {
                 const btn = document.getElementById(`q_${soalIdx}_${i}`);
@@ -1477,17 +1588,47 @@
             document.getElementById(`q_${soalIdx}_${opsiIdx}`).classList.add('selected');
         }
 
-        function cekSkorKuis() {
+        function cekSkorKuis(waktuHabis = false) {
+            if (kuisSelesai) return;
+            kuisSelesai = true;
+            clearInterval(kuisTimerInterval);
+
             let benar = 0;
-            soalKuisTKJ.forEach((s, idx) => {
-                if (jawabanUser[idx] === s.jawaban) benar++;
+            const waktuTerpakai = 120 - sisaWaktuDetik;
+
+            soalAktifKuis.forEach((s, idx) => {
+                const pilihanIdx = jawabanUser[idx];
+                s.opsiAcak.forEach((teksOpsi, oIdx) => {
+                    const btn = document.getElementById(`q_${idx}_${oIdx}`);
+                    btn.disabled = true;
+                    if (teksOpsi === s.benar) {
+                        btn.classList.add('correct');
+                    } else if (pilihanIdx === oIdx) {
+                        btn.classList.add('wrong');
+                    }
+                });
+
+                if (pilihanIdx !== undefined && s.opsiAcak[pilihanIdx] === s.benar) {
+                    benar++;
+                }
             });
-            const nilai = Math.round((benar / soalKuisTKJ.length) * 100);
+
+            const nilai = Math.round((benar / soalAktifKuis.length) * 100);
+            document.getElementById('quizStatusText').textContent = waktuHabis ? "⏰ Waktu Habis!" : "✅ Kuis Selesai!";
+
             document.getElementById('hasilKuis').innerHTML = `
                 <div class="info-callout" style="text-align:center; font-size:1rem;">
-                    <strong>Nilai Kamu: ${nilai} / 100</strong> (${benar} benar dari ${soalKuisTKJ.length} soal)
+                    ${waktuHabis ? '<div style="color:#dc2626; font-weight:700; margin-bottom:4px;">⏰ Waktu Habis! Jawaban otomatis dikoreksi.</div>' : ''}
+                    <strong>Nilai Akhir Kamu: ${nilai} / 100</strong><br>
+                    <span style="font-size:0.88rem;">Benar ${benar} dari ${soalAktifKuis.length} soal • Waktu pengerjaan: ${waktuTerpakai} detik</span>
+                    <div style="margin-top:12px;">
+                        <button class="btn-primary" onclick="bukaModalKuis()">
+                            <i class="fa-solid fa-rotate-right"></i> Main Lagi (Soal Baru Diacak)
+                        </button>
+                    </div>
                 </div>
             `;
+            document.getElementById('hasilKuis').scrollIntoView({ behavior: 'smooth' });
         }
 
         function toggleTheme() {
@@ -1537,7 +1678,7 @@
         }
 
         // ========================================================
-        // 6. ANIMASI PARTIKEL JARINGAN BACKGROUND (CANVAS)
+        // 7. ANIMASI PARTIKEL JARINGAN BACKGROUND (CANVAS)
         // ========================================================
         const canvas = document.getElementById('network-canvas');
         const ctx = canvas.getContext('2d');
