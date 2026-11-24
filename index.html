@@ -1,141 +1,616 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <title>Tutorial Ganti IP Address Windows - Praktik TKJ</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TKJ Cloud Hub - Modul, Praktikum & Diskusi Jaringan</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --sky-light: #e0f2fe;
+            --sky-primary: #0ea5e9;
+            --sky-medium: #0284c7;
+            --sky-dark: #0369a1;
+            --sky-deep: #0c4a6e;
+            --white-glass: rgba(255, 255, 255, 0.88);
+            --card-shadow: 0 10px 30px rgba(14, 165, 233, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f0f9ff 0%, #bae6fd 50%, #e0f2fe 100%);
+            color: var(--sky-deep);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        #network-canvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Navbar */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(14, 165, 233, 0.2);
+            padding: 0.9rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--sky-medium);
+            text-decoration: none;
+        }
+
+        .logo i {
+            font-size: 1.7rem;
+            color: var(--sky-primary);
+            animation: pulseGlow 2s infinite alternate;
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--sky-primary), var(--sky-medium));
+            color: white;
+            border: none;
+            padding: 9px 18px;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 0.88rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
+            transition: 0.3s;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(14, 165, 233, 0.45);
+        }
+
+        .badge-status {
+            background: #e0f2fe;
+            color: var(--sky-dark);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            border: 1px solid #bae6fd;
+        }
+
+        .dot {
+            width: 8px; height: 8px;
+            background: #22c55e;
+            border-radius: 50%;
+            animation: blink 1.5s infinite;
+        }
+
+        /* Hero */
+        .hero {
+            text-align: center;
+            padding: 3.5rem 5% 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .hero-tag {
+            display: inline-block;
+            background: rgba(14, 165, 233, 0.15);
+            color: var(--sky-dark);
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(14, 165, 233, 0.3);
+        }
+
+        .hero h1 {
+            font-size: 2.6rem;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            background: linear-gradient(90deg, var(--sky-deep), var(--sky-primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1rem;
+            color: #334155;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Search & Filter */
+        .controls {
+            max-width: 1100px;
+            margin: 0 auto 2.5rem;
+            padding: 0 5%;
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+            align-items: center;
+        }
+
+        .search-box {
+            position: relative;
+            width: 100%;
+            max-width: 550px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 14px 20px 14px 48px;
+            border-radius: 50px;
+            border: 2px solid rgba(14, 165, 233, 0.3);
+            background: var(--white-glass);
+            font-size: 0.98rem;
+            color: var(--sky-deep);
+            outline: none;
+            box-shadow: var(--card-shadow);
+            transition: 0.3s;
+        }
+
+        .search-box input:focus {
+            border-color: var(--sky-primary);
+            box-shadow: 0 0 20px rgba(14, 165, 233, 0.3);
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--sky-primary);
+        }
+
+        .filter-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .filter-btn {
+            padding: 8px 18px;
+            border-radius: 25px;
+            border: 1px solid rgba(14, 165, 233, 0.4);
+            background: rgba(255, 255, 255, 0.65);
+            color: var(--sky-dark);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--sky-primary);
+            color: white;
+            border-color: var(--sky-primary);
+            transform: translateY(-2px);
+        }
+
+        /* Grid Cards */
+        .container {
+            max-width: 1250px;
+            margin: 0 auto 4rem;
+            padding: 0 5%;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .card {
+            background: var(--white-glass);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.95);
+            box-shadow: var(--card-shadow);
+            transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+            animation: fadeUp 0.5s ease forwards;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 18px 35px rgba(14, 165, 233, 0.25);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 14px;
+        }
+
+        .icon-box {
+            width: 50px; height: 50px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #e0f2fe, #bae6fd);
+            color: var(--sky-medium);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            transition: 0.3s;
+        }
+
+        .card:hover .icon-box {
+            background: var(--sky-primary);
+            color: white;
+            transform: rotate(-6deg) scale(1.05);
+        }
+
+        .category-badge {
+            font-size: 0.74rem;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 12px;
+            background: #e0f2fe;
+            color: var(--sky-dark);
+        }
+
+        .card h3 {
+            font-size: 1.15rem;
+            margin-bottom: 8px;
+            color: var(--sky-deep);
+            cursor: pointer;
+        }
+
+        .card p {
+            font-size: 0.88rem;
+            color: #475569;
+            line-height: 1.55;
+            margin-bottom: 18px;
+            cursor: pointer;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 12px;
+            border-top: 1px solid rgba(14, 165, 233, 0.15);
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .btn-baca {
+            color: var(--sky-primary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-like {
+            background: #f0f9ff;
+            border: 1px solid #bae6fd;
+            color: var(--sky-dark);
+            padding: 5px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.82rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: 0.2s;
+        }
+
+        .btn-like:hover {
+            background: #fee2e2;
+            border-color: #fca5a5;
+            color: #dc2626;
+        }
+
+        /* Modal Overlay */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(12, 74, 110, 0.65);
+            backdrop-filter: blur(6px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 16px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            animation: fadeIn 0.25s ease;
+        }
+
+        .modal-box {
+            background: white;
+            width: 100%;
+            max-width: 780px;
+            max-height: 90vh;
+            border-radius: 24px;
+            overflow-y: auto;
+            padding: 28px;
+            position: relative;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+            border-top: 6px solid var(--sky-primary);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 18px; right: 18px;
+            background: #f1f5f9;
+            border: none;
+            width: 38px; height: 38px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: #475569;
+        }
+
+        .close-btn:hover { background: #fee2e2; color: #ef4444; }
+
+        .modal-title {
+            font-size: 1.55rem;
+            color: var(--sky-deep);
+            margin: 8px 0 12px;
+            padding-right: 40px;
+        }
+
+        .modal-content h4 {
+            color: var(--sky-medium);
+            margin: 18px 0 8px;
+            font-size: 1.05rem;
+        }
+
+        .modal-content ul, .modal-content ol {
+            padding-left: 20px;
+            color: #334155;
+            line-height: 1.7;
+            font-size: 0.94rem;
+        }
+
+        .code-block {
+            background: #0f172a;
+            color: #38bdf8;
+            padding: 14px;
+            border-radius: 12px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.84rem;
+            margin: 10px 0;
+            overflow-x: auto;
+            line-height: 1.55;
+        }
+
+        /* Kalkulator IP & Komentar Box */
+        .box-panel {
+            background: #f0f9ff;
+            border: 1px solid #bae6fd;
+            padding: 18px;
+            border-radius: 16px;
+            margin-top: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 12px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--sky-deep);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: 10px;
+            border: 1px solid #7dd3fc;
+            font-size: 0.92rem;
+            outline: none;
+        }
+
+        .comment-item {
+            background: white;
+            padding: 12px 15px;
+            border-radius: 12px;
+            margin-top: 10px;
+            border: 1px solid #e0f2fe;
+        }
+
+        .comment-item strong { color: var(--sky-medium); font-size: 0.9rem; }
+        .comment-item p { font-size: 0.88rem; color: #334155; margin-top: 4px; }
+
+        footer {
+            background: rgba(255, 255, 255, 0.85);
+            text-align: center;
+            padding: 1.8rem 5%;
+            border-top: 1px solid rgba(14, 165, 233, 0.2);
+            color: #475569;
+            font-size: 0.9rem;
+        }
+
+        @keyframes pulseGlow {
+            from { transform: scale(1); filter: drop-shadow(0 0 2px #38bdf8); }
+            to { transform: scale(1.08); filter: drop-shadow(0 0 8px #0ea5e9); }
+        }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 1.95rem; }
+        }
+    </style>
 </head>
 <body>
 
-  <header>
-    <h1>Tutorial Praktik TKJ: Setting IP Static di Windows</h1>
-    <p>Panduan dasar konfigurasi alamat IP jaringan komputer untuk siswa TKJ.</p>
-    <hr>
-  </header>
+    <canvas id="network-canvas"></canvas>
 
-  <section>
-    <h2>Apa itu IP Static?</h2>
-    <p><b>IP Static</b> adalah alamat IP yang diatur secara manual pada komputer agar alamatnya tetap (tidak berubah-ubah) di dalam jaringan lokal (LAN).</p>
-  </section>
+    <!-- Navbar -->
+    <nav>
+        <a href="#" class="logo">
+            <i class="fa-solid fa-network-wired"></i>
+            <span>TKJ<span style="color:#0284c7;">Cloud</span></span>
+        </a>
+        <div class="nav-actions">
+            <button class="btn-primary" onclick="bukaModalTambah()">
+                <i class="fa-solid fa-plus"></i> Tambah Materi
+            </button>
+            <div class="badge-status" id="db-status">
+                <div class="dot" style="background:#f59e0b;"></div>
+                <span>Mode Lokal (Isi Key Supabase)</span>
+            </div>
+        </div>
+    </nav>
 
-  <section>
-    <h2>Alat dan Bahan</h2>
-    <ul>
-      <li>1 Unit PC / Laptop (Windows 10 / 11)</li>
-      <li>Kabel LAN (Straight) atau koneksi Wi-Fi</li>
-    </ul>
-  </section>
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-tag"><i class="fa-solid fa-cloud"></i> Terintegrasi GitHub • Supabase • Vercel</div>
+        <h1>Portal Modul & Lab Praktikum TKJ</h1>
+        <p>Panduan lengkap perakitan PC, instalasi OS, administrasi server Linux, routing MikroTik & Cisco, kalkulator IP, hingga forum diskusi siswa.</p>
+    </section>
 
-  <section>
-    <h2>Langkah-Langkah Konfigurasi</h2>
-    <ol>
-      <li>Tekan tombol <b>Windows + R</b> pada keyboard.</li>
-      <li>Ketik <code>ncpa.cpl</code> lalu tekan <b>Enter</b> untuk membuka <i>Network Connections</i>.</li>
-      <li>Klik kanan pada adapter jaringan (<b>Ethernet</b> atau <b>Wi-Fi</b>), lalu pilih <b>Properties</b>.</li>
-      <li>Cari dan klik 2x pada <b>Internet Protocol Version 4 (TCP/IPv4)</b>.</li>
-      <li>Pilih opsi <b>Use the following IP address</b>, lalu masukkan konfigurasi berikut:</li>
-    </ol>
+    <!-- Search & Filter -->
+    <section class="controls">
+        <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="searchInput" placeholder="Cari materi... (contoh: MikroTik, IP, Ubuntu, Kabel LAN, Cisco)">
+        </div>
+        <div class="filter-buttons">
+            <button class="filter-btn active" data-filter="all">Semua Materi</button>
+            <button class="filter-btn" data-filter="hardware">Hardware & OS</button>
+            <button class="filter-btn" data-filter="server">Linux & Server</button>
+            <button class="filter-btn" data-filter="network">Jaringan & Routing</button>
+        </div>
+    </section>
 
-    <pre>
-IP Address          : 192.168.10.2
-Subnet Mask         : 255.255.255.0
-Default Gateway     : 192.168.10.1
-Preferred DNS Server: 8.8.8.8
-    </pre>
+    <!-- Grid Materi -->
+    <main class="container">
+        <div class="grid" id="materiGrid"></div>
+    </main>
 
-    <p>6. Klik <b>OK</b> pada semua jendela untuk menyimpan pengaturan.</p>
-  </section>
+    <!-- Modal Detail Materi + Komentar Supabase -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-box">
+            <button class="close-btn" onclick="tutupModal('modalOverlay')"><i class="fa-solid fa-xmark"></i></button>
+            <span class="category-badge" id="modalCategory">Kategori</span>
+            <h2 class="modal-title" id="modalTitle">Judul Materi</h2>
+            <div class="modal-content" id="modalBody"></div>
 
-  <section>
-    <h2>Cara Pengujian</h2>
-    <ol>
-      <li>Buka <b>Command Prompt (CMD)</b>.</li>
-      <li>Ketik perintah <code>ipconfig</code> untuk memastikan IP sudah berubah.</li>
-      <li>Ketik <code>ping 192.168.10.1</code>. Jika muncul balasan <b>Reply from...</b>, artinya konfigurasi berhasil.</li>
-    </ol>
-  </section>
+            <!-- Fitur Diskusi / Komentar tersimpan di Supabase -->
+            <div class="box-panel">
+                <h4><i class="fa-solid fa-comments"></i> Diskusi & Catatan Praktikum (Supabase DB)</h4>
+                <div class="form-group" style="margin-top:10px;">
+                    <input type="text" id="namaKomentar" class="form-control" placeholder="Nama kamu / Kelas (contoh: Budi - XI TKJ 1)">
+                </div>
+                <div class="form-group">
+                    <textarea id="isiKomentar" class="form-control" rows="2" placeholder="Tulis pertanyaan atau catatan hasil praktikum..."></textarea>
+                </div>
+                <button class="btn-primary" onclick="kirimKomentar()"><i class="fa-solid fa-paper-plane"></i> Kirim Catatan</button>
+                <div id="daftarKomentar" style="margin-top:14px;"></div>
+            </div>
+        </div>
+    </div>
 
-  <section>
-    <h2>Form Pertanyaan / Komentar</h2>
-    <form id="formKomentar">
-      <label>Nama Siswa:</label><br>
-      <input type="text" id="nama" placeholder="Masukkan nama" required><br><br>
+    <!-- Modal Tambah Materi Baru ke Supabase -->
+    <div class="modal-overlay" id="modalTambahOverlay">
+        <div class="modal-box" style="max-width: 560px;">
+            <button class="close-btn" onclick="tutupModal('modalTambahOverlay')"><i class="fa-solid fa-xmark"></i></button>
+            <span class="category-badge">Admin Panel • Supabase</span>
+            <h2 class="modal-title">Tambah Modul Materi Baru</h2>
+            <form id="formTambahMateri" onsubmit="simpanMateriBaru(event)">
+                <div class="form-group">
+                    <label>PIN Admin (Default: 1234)</label>
+                    <input type="password" id="pinAdmin" class="form-control" placeholder="Masukkan PIN 1234" required>
+                </div>
+                <div class="form-group">
+                    <label>Judul Materi</label>
+                    <input type="text" id="newJudul" class="form-control" placeholder="Contoh: 16. Konfigurasi VLAN Trunking" required>
+                </div>
+                <div class="form-group">
+                    <label>Kategori</label>
+                    <select id="newKategori" class="form-control">
+                        <option value="network">Jaringan & Routing</option>
+                        <option value="server">Linux & Server</option>
+                        <option value="hardware">Hardware & OS</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Ringkasan Singkat</label>
+                    <input type="text" id="newRingkasan" class="form-control" placeholder="Penjelasan singkat materi..." required>
+                </div>
+                <div class="form-group">
+                    <label>Isi Panduan Lengkap (Bisa pakai HTML seperti &lt;p&gt;, &lt;ol&gt;, &lt;li&gt;)</label>
+                    <textarea id="newDetail" class="form-control" rows="4" placeholder="<h4>Langkah Praktikum:</h4><ol><li>Langkah pertama...</li></ol>" required></textarea>
+                </div>
+                <button type="submit" class="btn-primary" style="width:100%; justify-content:center;">
+                    <i class="fa-solid fa-cloud-arrow-up"></i> Simpan ke Database Supabase
+                </button>
+            </form>
+        </div>
+    </div>
 
-      <label>Pertanyaan / Catatan:</label><br>
-      <textarea id="pesan" rows="3" placeholder="Tulis pertanyaan..." required></textarea><br><br>
+    <footer>
+        <p>Portal Belajar <span>Teknik Komputer & Jaringan (TKJ)</span> • Powered by HTML5, Supabase & Vercel</p>
+    </footer>
 
-      <button type="submit">Kirim</button>
-    </form>
-    <p id="status"></p>
+    <!-- Supabase SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    <h3>Daftar Komentar Masuk:</h3>
-    <ul id="daftarKomentar">
-      <li>Memuat komentar...</li>
-    </ul>
-  </section>
+    <script>
+        // ========================================================
+        // 1. KONFIGURASI SUPABASE (GANTI DENGAN MILIK KAMU)
+        // ========================================================
+        const SUPABASE_URL = 'https://bmkzydojbfkiotqrvypm.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJta3p5ZG9qYmZraW90cXJ2eXBtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTUyNDQzODksImV4cCI6MjExMDgyMDM4OX0.G1BswCoWHqp_WssZPnzaH5tliQrjiZzvKOqJiWOphiM';
+        const ADMIN_PIN = '1234';
 
-  <hr>
-  <footer>
-    <p>&copy; 2026 Modul Praktik TKJ</p>
-  </footer>
+        let supabaseClient = null;
+        let isSupabaseReady = false;
 
-  <!-- Library Supabase -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  
-  <script>
-    const supabaseUrl = 'https://bmkzydojbfkiotqrvypm.supabase.co';
-    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJta3p5ZG9qYmZraW90cXJ2eXBtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTUyNDQzODksImV4cCI6MjExMDgyMDM4OX0.G1BswCoWHqp_WssZPnzaH5tliQrjiZzvKOqJiWOphiM';
-    const db = supabase.createClient(supabaseUrl, supabaseKey);
-
-    async function muatKomentar() {
-      const daftarEl = document.getElementById('daftarKomentar');
-
-      const { data, error } = await db
-        .from('komentar')
-        .select('*')
-        .order('id', { ascending: false });
-
-      if (error) {
-        daftarEl.innerHTML = '<li>Gagal memuat komentar.</li>';
-        return;
-      }
-
-      if (data.length === 0) {
-        daftarEl.innerHTML = '<li>Belum ada komentar.</li>';
-        return;
-      }
-      
-      daftarEl.innerHTML = '';
-      data.forEach(item => {
-        const li = document.createElement('li');
-        li.innerHTML = `<b>${item.nama}</b>: ${item.pesan}`;
-        daftarEl.appendChild(li);
-      });
-    }
-
-    document.getElementById('formKomentar').addEventListener('submit', async function(e) {
-      e.preventDefault();
-
-      const namaInput = document.getElementById('nama').value;
-      const pesanInput = document.getElementById('pesan').value;
-      const statusTeks = document.getElementById('status');
-
-      statusTeks.innerText = "Mengirim data...";
-
-      const { error } = await db
-        .from('komentar')
-        .insert([{ nama: namaInput, pesan: pesanInput }]);
-
-      if (error) {
-        statusTeks.innerText = "Gagal mengirim: " + error.message;
-      } else {
-        statusTeks.innerText = "Berhasil! Komentar tersimpan.";
-        document.getElementById('formKomentar').reset();
-        muatKomentar(); // Refresh daftar komentar otomatis
-      }
-    });
-
-    muatKomentar();
-  </script>
-
-</body>
-</html
+        if (SUPABASE_URL.startsWith('https://') && !SUPABASE_URL.includes('PROJECT-KAMU')) {
