@@ -614,3 +614,591 @@
         let isSupabaseReady = false;
 
         if (SUPABASE_URL.startsWith('https://') && !SUPABASE_URL.includes('PROJECT-KAMU')) {
+            supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+            isSupabaseReady = true;
+            document.getElementById('db-status').innerHTML = `<div class="dot"></div><span>Supabase Cloud Aktif</span>`;
+        }
+
+        // ========================================================
+        // 2. DATA MATERI TKJ LENGKAP (15 MODUL UTAMA)
+        // ========================================================
+        let dataMateriTKJ = [
+            {
+                id: 1, likes: 12,
+                judul: "1. Instalasi Windows 10",
+                kategori: "hardware",
+                label_kategori: "Sistem Operasi",
+                ikon: "fa-brands fa-windows",
+                ringkasan: "Pembuatan bootable USB Rufus (GPT/MBR), setting BIOS/UEFI, manajemen partisi disk, dan instalasi driver.",
+                detail: `
+                    <h4>Persiapan Media Instalasi:</h4>
+                    <ul>
+                        <li>Siapkan file ISO Windows 10 dan Flashdisk kosong minimal 8 GB.</li>
+                        <li>Buka aplikasi <strong>Rufus</strong>, pilih ISO Windows 10, atur <em>Partition Scheme</em> ke <strong>GPT</strong> (untuk UEFI modern) atau <strong>MBR</strong> (untuk BIOS Legacy), lalu klik Start.</li>
+                    </ul>
+                    <h4>Tahapan Instalasi:</h4>
+                    <ol>
+                        <li>Colokkan flashdisk ke PC, nyalakan dan tekan tombol masuk BIOS (<strong>F2 / DEL / F12</strong>).</li>
+                        <li>Arahkan <em>Boot Order #1</em> ke USB Flashdisk, tekan <strong>F10</strong> untuk Save & Exit.</li>
+                        <li>Pilih Bahasa & Keyboard, klik <strong>Install Now</strong>, lalu pilih <em>I don't have a product key</em>.</li>
+                        <li>Pilih edisi <strong>Windows 10 Pro</strong> > centang lisensi > pilih <strong>Custom: Install Windows only</strong>.</li>
+                        <li>Buat partisi sistem (Drive C: minimal 60 GB), klik <strong>Next</strong>, dan tunggu proses penyalinan file selesai hingga masuk desktop.</li>
+                    </ol>`
+            },
+            {
+                id: 2, likes: 19,
+                judul: "2. Remote SSH Server",
+                kategori: "server",
+                label_kategori: "Administrasi Server",
+                ikon: "fa-solid fa-terminal",
+                ringkasan: "Konfigurasi OpenSSH Server di Linux Ubuntu/Debian, remote via PuTTY/Terminal, dan keamanan port SSH.",
+                detail: `
+                    <h4>Instalasi Layanan SSH di Ubuntu/Debian:</h4>
+                    <div class="code-block">sudo apt update<br>sudo apt install openssh-server -y<br>sudo systemctl status ssh</div>
+                    <h4>Cara Remote dari Komputer Client:</h4>
+                    <ol>
+                        <li>Pastikan PC Client dan Server berada dalam satu jaringan (uji dengan <code>ping IP_Server</code>).</li>
+                        <li>Buka CMD / Terminal di client atau gunakan aplikasi <strong>PuTTY</strong>, lalu jalankan perintah:</li>
+                    </ol>
+                    <div class="code-block">ssh nama_user@192.168.1.10</div>
+                    <h4>Tips Keamanan SSH:</h4>
+                    <ul>
+                        <li>Edit konfigurasi di <code>/etc/ssh/sshd_config</code> untuk mengubah default <code>Port 22</code> menjadi port custom (misal <code>Port 2222</code>), lalu restart dengan <code>sudo systemctl restart ssh</code>.</li>
+                    </ul>`
+            },
+            {
+                id: 3, likes: 15,
+                judul: "3. Oracle VirtualBox & Ubuntu",
+                kategori: "server",
+                label_kategori: "Virtualisasi",
+                ikon: "fa-brands fa-ubuntu",
+                ringkasan: "Membuat mesin virtual Ubuntu Server/Desktop, konfigurasi RAM/Storage, dan mode jaringan Bridged & Host-Only.",
+                detail: `
+                    <h4>Langkah Membuat Virtual Machine (VM):</h4>
+                    <ol>
+                        <li>Buka <strong>Oracle VM VirtualBox</strong> > klik tombol <strong>New</strong>.</li>
+                        <li>Isi nama VM (contoh: <code>Ubuntu-Server-24</code>), pilih Type: <strong>Linux</strong>, Version: <strong>Ubuntu (64-bit)</strong>.</li>
+                        <li>Atur Base Memory (RAM) minimal <strong>2048 MB</strong> dan Virtual Hard Disk (VDI) sebesar <strong>25 GB</strong>.</li>
+                    </ol>
+                    <h4>Pengaturan Jaringan VirtualBox (Penting untuk TKJ):</h4>
+                    <ul>
+                        <li><strong>Bridged Adapter:</strong> VM mendapatkan IP langsung dari router fisik (sejajar dengan laptop asli).</li>
+                        <li><strong>Host-Only Adapter:</strong> Membuat jaringan lokal tertutup antara laptop asli (Host) dengan VM (Guest) tanpa butuh internet.</li>
+                        <li><strong>Internal Network:</strong> Menghubungkan sesama VM (misal VM MikroTik ke VM Ubuntu Client).</li>
+                    </ul>`
+            },
+            {
+                id: 4, likes: 24,
+                judul: "4. Web Server Apache2",
+                kategori: "server",
+                label_kategori: "Web Server",
+                ikon: "fa-solid fa-globe",
+                ringkasan: "Instalasi Apache2 di Ubuntu, struktur direktori /var/www/html, dan pembuatan VirtualHost multi-domain.",
+                detail: `
+                    <h4>Instalasi Web Server Apache2:</h4>
+                    <div class="code-block">sudo apt update<br>sudo apt install apache2 -y<br>sudo ufw allow 'Apache Full'</div>
+                    <h4>Lokasi File Konfigurasi Penting:</h4>
+                    <ul>
+                        <li><code>/var/www/html/index.html</code> : Halaman web utama yang tampil saat IP server diakses dari browser.</li>
+                        <li><code>/etc/apache2/sites-available/</code> : Direktori untuk membuat konfigurasi domain (VirtualHost).</li>
+                    </ul>
+                    <h4>Membuat VirtualHost Baru:</h4>
+                    <div class="code-block">sudo cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/tkj.conf<br>sudo a2ensite tkj.conf<br>sudo systemctl reload apache2</div>`
+            },
+            {
+                id: 5, likes: 10,
+                judul: "5. Cara Ganti IP di Windows",
+                kategori: "network",
+                label_kategori: "Konfigurasi IP",
+                ikon: "fa-solid fa-ethernet",
+                ringkasan: "Mengatur IP Address Static dan DHCP pada Windows 10/11 melalui Control Panel (ncpa.cpl) dan Command Prompt.",
+                detail: `
+                    <h4>Metode 1: Lewat Control Panel (GUI)</h4>
+                    <ol>
+                        <li>Tekan tombol <strong>Windows + R</strong>, ketik <code>ncpa.cpl</code> lalu tekan Enter.</li>
+                        <li>Klik kanan pada adapter <strong>Ethernet</strong> atau <strong>Wi-Fi</strong> > pilih <strong>Properties</strong>.</li>
+                        <li>Klik dua kali pada <strong>Internet Protocol Version 4 (TCP/IPv4)</strong>.</li>
+                        <li>Pilih <em>Use the following IP address</em> dan masukkan IP Address (misal <code>192.168.10.2</code>), Subnet Mask (<code>255.255.255.0</code>), dan Default Gateway (<code>192.168.10.1</code>).</li>
+                    </ol>
+                    <h4>Metode 2: Cepat Lewat CMD (Run as Administrator)</h4>
+                    <div class="code-block">netsh interface ip set address name="Ethernet" static 192.168.10.2 255.255.255.0 192.168.10.1<br>netsh interface ip set dns name="Ethernet" static 8.8.8.8</div>`
+            },
+            {
+                id: 6, likes: 31,
+                judul: "6. Rakit Kabel LAN (UTP)",
+                kategori: "network",
+                label_kategori: "Infrastruktur Fisik",
+                ikon: "fa-solid fa-plug",
+                ringkasan: "Standar warna kabel Straight (T568B) dan Crossover (T568A), teknik crimping RJ45, dan pengujian LAN Tester.",
+                detail: `
+                    <h4>Susunan Warna Kabel Straight (Standar T568B):</h4>
+                    <ol>
+                        <li><strong>Putih Oranye</strong> (Tx+)</li>
+                        <li><strong>Oranye</strong> (Tx-)</li>
+                        <li><strong>Putih Hijau</strong> (Rx+)</li>
+                        <li><strong>Biru</strong></li>
+                        <li><strong>Putih Biru</strong></li>
+                        <li><strong>Hijau</strong> (Rx-)</li>
+                        <li><strong>Putih Cokelat</strong></li>
+                        <li><strong>Cokelat</strong></li>
+                    </ol>
+                    <h4>Perbedaan Penggunaan:</h4>
+                    <ul>
+                        <li><strong>Straight-Through (T568B - T568B):</strong> Untuk perangkat berbeda jenis (PC ke Switch, Switch ke Router).</li>
+                        <li><strong>Cross-Over (T568A - T568B):</strong> Untuk perangkat sejenis (PC ke PC, Switch ke Switch lama).</li>
+                        <li>Pastikan saat diuji dengan <strong>LAN Tester</strong>, lampu indikator 1 sampai 8 menyala berurutan tanpa ada yang mati.</li>
+                    </ul>`
+            },
+            {
+                id: 7, likes: 14,
+                judul: "7. File Manajemen & Hak Akses",
+                kategori: "server",
+                label_kategori: "Sistem File Linux",
+                ikon: "fa-solid fa-folder-tree",
+                ringkasan: "Manajemen direktori CLI Linux (ls, cd, mkdir, cp, mv, rm) serta pengaturan hak akses chmod & chown.",
+                detail: `
+                    <h4>Perintah Navigasi & Manajemen File Linux:</h4>
+                    <div class="code-block">pwd                   # Cek posisi direktori saat ini<br>ls -la                # Tampilkan semua file beserta hak aksesnya<br>mkdir -p lab/tkj      # Membuat folder bertingkat<br>cp sumber.txt tujuan/ # Menyalin file<br>mv lama.txt baru.txt  # Memindahkan atau mengganti nama file<br>rm -rf nama_folder    # Menghapus folder secara permanen</div>
+                    <h4>Hak Akses File (chmod):</h4>
+                    <ul>
+                        <li>Angka oktal: <strong>4 = Read (r)</strong>, <strong>2 = Write (w)</strong>, <strong>1 = Execute (x)</strong>.</li>
+                        <li><code>chmod 755 file.sh</code> memberikan akses penuh (rwx) ke Owner, dan akses baca+eksekusi (r-x) ke Group & Others.</li>
+                    </ul>`
+            },
+            {
+                id: 8, likes: 22,
+                judul: "8. Rakit PC (Hardware)",
+                kategori: "hardware",
+                label_kategori: "Perakitan Komputer",
+                ikon: "fa-solid fa-microchip",
+                ringkasan: "Panduan lengkap merakit komponen PC: Motherboard, CPU, Thermal Paste, RAM, SSD, PSU, hingga kabel Front Panel.",
+                detail: `
+                    <h4>Urutan Perakitan PC yang Aman:</h4>
+                    <ol>
+                        <li><strong>Pasang Processor (CPU):</strong> Buka tuas pengunci soket motherboard, sejajarkan tanda segitiga emas pada CPU dengan soket, tutup pengunci, oleskan <em>thermal paste</em> sebesar biji kacang hijau, lalu pasang Heatsink/Cooler.</li>
+                        <li><strong>Pasang RAM:</strong> Buka pengait slot DIMM, sesuaikan lekukan pada keping RAM, tekan kedua ujung hingga pengait mengunci otomatis.</li>
+                        <li><strong>Pasang Motherboard ke Casing:</strong> Pasang plat I/O Shield di bagian belakang casing, lalu baut motherboard pada dudukan <em>standoff</em> kuningan.</li>
+                        <li><strong>Pasang Storage & PSU:</strong> Pasang SSD NVMe/SATA dan Power Supply Unit (PSU).</li>
+                        <li><strong>Kabel Daya & Front Panel:</strong> Hubungkan kabel 24-pin ATX, 8-pin CPU, kabel SATA, dan pin kecil Front Panel (<strong>POWER SW, RESET SW, HDD LED, POWER LED</strong>).</li>
+                    </ol>`
+            },
+            {
+                id: 9, likes: 45,
+                judul: "9. Konfigurasi Dasar MikroTik",
+                kategori: "network",
+                label_kategori: "RouterOS",
+                ikon: "fa-solid fa-router",
+                ringkasan: "Setting MikroTik dari nol via Winbox: DHCP Client, IP Address, Firewall NAT Masquerade, DNS, dan DHCP Server.",
+                detail: `
+                    <h4>Skrip Konfigurasi Dasar Internet Gateway (New Terminal):</h4>
+                    <div class="code-block"># 1. Minta IP otomatis dari ISP di ether1<br>/ip dhcp-client add interface=ether1 disabled=no<br><br># 2. Beri IP Lokal pada ether2 (LAN)<br>/ip address add address=192.168.50.1/24 interface=ether2<br><br># 3. Atur DNS Google<br>/ip dns set servers=8.8.8.8,8.8.4.4 allow-remote-requests=yes<br><br># 4. Aktifkan NAT Masquerade agar client bisa internetan<br>/ip firewall nat add chain=srcnat out-interface=ether1 action=masquerade</div>
+                    <p>Terakhir, buka menu <strong>IP > DHCP Server > DHCP Setup</strong>, pilih <code>ether2</code>, dan klik Next hingga selesai agar PC client mendapat IP otomatis.</p>`
+            },
+            {
+                id: 10, likes: 27,
+                judul: "10. Cisco Packet Tracer & CLI",
+                kategori: "network",
+                label_kategori: "Cisco IOS",
+                ikon: "fa-solid fa-diagram-project",
+                ringkasan: "Konfigurasi Router dan Switch Cisco menggunakan IOS CLI: IP Interface, VLAN, Trunking, dan Static Routing.",
+                detail: `
+                    <h4>Konfigurasi IP Interface pada Router Cisco:</h4>
+                    <div class="code-block">Router> enable<br>Router# configure terminal<br>Router(config)# hostname R1-TKJ<br>R1-TKJ(config)# interface gigabitEthernet 0/0<br>R1-TKJ(config-if)# ip address 192.168.10.1 255.255.255.0<br>R1-TKJ(config-if)# no shutdown<br>R1-TKJ(config-if)# exit<br>R1-TKJ(config)# do write memory</div>
+                    <h4>Konfigurasi VLAN pada Switch Cisco:</h4>
+                    <div class="code-block">Switch(config)# vlan 10<br>Switch(config-vlan)# name LAB_ADMIN<br>Switch(config-vlan)# exit<br>Switch(config)# interface fastEthernet 0/1<br>Switch(config-if)# switchport mode access<br>Switch(config-if)# switchport access vlan 10</div>`
+            },
+            {
+                id: 11, likes: 16,
+                judul: "11. Web Server Nginx & Cloud",
+                kategori: "server",
+                label_kategori: "Web Server Modern",
+                ikon: "fa-solid fa-server",
+                ringkasan: "Instalasi Nginx sebagai web server performa tinggi dan reverse proxy, serta deployment aplikasi web ke Vercel.",
+                detail: `
+                    <h4>Instalasi Nginx di Ubuntu Server:</h4>
+                    <div class="code-block">sudo apt update<br>sudo apt install nginx -y<br>sudo systemctl enable --now nginx</div>
+                    <p>Direktori root default Nginx berada di <code>/var/www/html</code>, sedangkan file konfigurasi server block berada di <code>/etc/nginx/sites-available/default</code>. Nginx sangat populer karena mampu menangani ribuan koneksi bersamaan dengan konsumsi memori sangat rendah.</p>`
+            },
+            {
+                id: 12, likes: 29,
+                judul: "12. Tunnel Link (Cloudflare & Ngrok)",
+                kategori: "network",
+                label_kategori: "Tunneling & Port Forwarding",
+                ikon: "fa-solid fa-shield-halved",
+                ringkasan: "Mengekspos server lokal localhost/LAN ke internet publik secara aman tanpa perlu IP Public Statis.",
+                detail: `
+                    <h4>Fungsi Tunneling di TKJ:</h4>
+                    <p>Saat server Ubuntu atau XAMPP berjalan di jaringan lokal sekolah (di balik NAT ISP), orang dari luar tidak bisa mengaksesnya. Tunneling membuat jalur terenkripsi keluar ke server cloud sehingga web lokal punya link HTTPS publik.</p>
+                    <h4>Perintah Cepat Menjalankan Tunnel:</h4>
+                    <div class="code-block"># Opsi 1: Menggunakan Cloudflare Tunnel (Gratis tanpa daftar)<br>cloudflared tunnel --url http://localhost:80<br><br># Opsi 2: Menggunakan Ngrok<br>ngrok http 80</div>`
+            },
+            {
+                id: 13, likes: 52,
+                judul: "13. Cara Hitung IP & Subnetting",
+                kategori: "network",
+                label_kategori: "Kalkulator & Rumus IP",
+                ikon: "fa-solid fa-calculator",
+                ringkasan: "Rumus menghitung Subnet Mask, Network ID, Broadcast ID, dan Host Valid disertai Kalkulator Subnetting interaktif.",
+                detail: `
+                    <h4>Rumus Cepat Subnetting IPv4 (Contoh Prefix /26):</h4>
+                    <ul>
+                        <li><strong>Subnet Mask:</strong> <code>255.255.255.192</code> (26 bit angka 1, sisa 6 bit angka 0).</li>
+                        <li><strong>Jumlah Host Valid:</strong> $2^6 - 2 = 62$ perangkat per subnet.</li>
+                        <li><strong>Kelipatan Blok Subnet:</strong> $256 - 192 = 64$ (Blok: 0, 64, 128, 192).</li>
+                    </ul>
+                    <div class="box-panel" style="background:white;">
+                        <strong><i class="fa-solid fa-bolt"></i> Kalkulator IPv4 Otomatis:</strong>
+                        <div style="display:flex; gap:10px; flex-wrap:wrap; margin:10px 0;">
+                            <input type="text" id="inputIp" class="form-control" style="max-width:200px;" value="192.168.1.10" placeholder="IP Address">
+                            <select id="inputCidr" class="form-control" style="max-width:220px;">
+                                <option value="24">/24 (255.255.255.0)</option>
+                                <option value="25">/25 (255.255.255.128)</option>
+                                <option value="26" selected>/26 (255.255.255.192)</option>
+                                <option value="27">/27 (255.255.255.224)</option>
+                                <option value="28">/28 (255.255.255.240)</option>
+                                <option value="29">/29 (255.255.255.248)</option>
+                                <option value="30">/30 (255.255.255.252)</option>
+                            </select>
+                            <button class="btn-primary" onclick="hitungSubnet()">Hitung Sekarang</button>
+                        </div>
+                        <div id="hasilIp" style="font-size:0.9rem; color:#0c4a6e; line-height:1.6;">
+                            Klik tombol <strong>Hitung Sekarang</strong> untuk melihat hasil detail.
+                        </div>
+                    </div>`
+            },
+            {
+                id: 14, likes: 18,
+                judul: "14. DNS Server (Bind9)",
+                kategori: "server",
+                label_kategori: "Layanan Jaringan",
+                ikon: "fa-solid fa-address-book",
+                ringkasan: "Konfigurasi Bind9 di Ubuntu Server untuk menerjemahkan IP Address menjadi nama domain lokal (Forward & Reverse Zone).",
+                detail: `
+                    <h4>Instalasi Bind9 di Ubuntu:</h4>
+                    <div class="code-block">sudo apt update && sudo apt install bind9 bind9utils dnsutils -y</div>
+                    <h4>Langkah Konfigurasi Utama:</h4>
+                    <ol>
+                        <li>Daftarkan nama domain (misal <code>smktkj.sch.id</code>) di file <code>/etc/bind/named.conf.local</code>.</li>
+                        <li>Salin template <code>db.local</code> menjadi <code>db.smktkj</code> dan arahkan record <strong>A</strong> ke IP Server.</li>
+                        <li>Restart layanan dengan <code>sudo systemctl restart bind9</code> dan uji memakai perintah <code>nslookup smktkj.sch.id</code>.</li>
+                    </ol>`
+            },
+            {
+                id: 15, likes: 21,
+                judul: "15. Keamanan Jaringan & Firewall",
+                kategori: "network",
+                label_kategori: "Network Security",
+                ikon: "fa-solid fa-lock",
+                ringkasan: "Filtering paket dengan UFW Linux & MikroTik Firewall Filter Rules untuk memblokir akses ilegal.",
+                detail: `
+                    <h4>Aturan Dasar Firewall UFW di Ubuntu:</h4>
+                    <div class="code-block">sudo ufw default deny incoming<br>sudo ufw default allow outgoing<br>sudo ufw allow 22/tcp<br>sudo ufw allow 80/tcp<br>sudo ufw enable</div>
+                    <h4>Blokir Situs / Ping di MikroTik:</h4>
+                    <div class="code-block">/ip firewall filter add chain=input protocol=icmp action=drop comment="Blokir Ping ke Router"</div>`
+            }
+        ];
+
+        let materiAktifId = null;
+        let currentFilter = 'all';
+
+        // ========================================================
+        // 3. INTEGRASI SUPABASE: LOAD, LIKE, TAMBAH MATERI & KOMENTAR
+        // ========================================================
+        async function muatMateriDariSupabase() {
+            if (!isSupabaseReady) {
+                renderMateri();
+                return;
+            }
+
+            const { data, error } = await supabaseClient
+                .from('materi_tkj')
+                .select('*')
+                .order('id', { ascending: true });
+
+            if (!error && data && data.length > 0) {
+                dataMateriTKJ = data;
+                document.getElementById('db-status').innerHTML = `<div class="dot"></div><span>Supabase Terhubung (${data.length} Modul)</span>`;
+            } else if (!error && data && data.length === 0) {
+                // Jika tabel Supabase masih kosong, otomatis isi dengan 15 materi bawaan!
+                const dataAwal = dataMateriTKJ.map(({ id, ...rest }) => rest);
+                const { data: inserted } = await supabaseClient.from('materi_tkj').insert(dataAwal).select();
+                if (inserted) dataMateriTKJ = inserted;
+            }
+            renderMateri(currentFilter, document.getElementById('searchInput').value);
+        }
+
+        async function tambahLike(event, id) {
+            event.stopPropagation(); // Mencegah modal terbuka saat klik tombol Like
+            const item = dataMateriTKJ.find(m => m.id === id);
+            if (!item) return;
+
+            item.likes = (item.likes || 0) + 1;
+            renderMateri(currentFilter, document.getElementById('searchInput').value);
+
+            if (isSupabaseReady) {
+                await supabaseClient
+                    .from('materi_tkj')
+                    .update({ likes: item.likes })
+                    .eq('id', id);
+            }
+        }
+
+        async function simpanMateriBaru(e) {
+            e.preventDefault();
+            const pin = document.getElementById('pinAdmin').value;
+            if (pin !== ADMIN_PIN) {
+                alert('PIN Admin salah! Gunakan PIN default: 1234');
+                return;
+            }
+
+            const kat = document.getElementById('newKategori').value;
+            const labelMap = { hardware: 'Hardware & OS', server: 'Linux & Server', network: 'Jaringan & Routing' };
+            const ikonMap = { hardware: 'fa-solid fa-computer', server: 'fa-solid fa-server', network: 'fa-solid fa-network-wired' };
+
+            const materiBaru = {
+                judul: document.getElementById('newJudul').value,
+                kategori: kat,
+                label_kategori: labelMap[kat],
+                ikon: ikonMap[kat],
+                ringkasan: document.getElementById('newRingkasan').value,
+                detail: document.getElementById('newDetail').value,
+                likes: 0
+            };
+
+            if (isSupabaseReady) {
+                const { data, error } = await supabaseClient.from('materi_tkj').insert([materiBaru]).select();
+                if (error) {
+                    alert('Gagal menyimpan ke Supabase: ' + error.message);
+                    return;
+                }
+                if (data) dataMateriTKJ.push(data[0]);
+            } else {
+                materiBaru.id = Date.now();
+                dataMateriTKJ.push(materiBaru);
+            }
+
+            document.getElementById('formTambahMateri').reset();
+            tutupModal('modalTambahOverlay');
+            renderMateri(currentFilter, document.getElementById('searchInput').value);
+            alert('Materi berhasil ditambahkan!');
+        }
+
+        async function muatKomentar(materiId) {
+            const listEl = document.getElementById('daftarKomentar');
+            if (!isSupabaseReady) {
+                listEl.innerHTML = `<p style="font-size:0.84rem; color:#64748b;">Hubungkan SUPABASE_URL & KEY agar kolom diskusi tersimpan ke database.</p>`;
+                return;
+            }
+
+            listEl.innerHTML = `<p style="font-size:0.84rem; color:#64748b;">Memuat catatan diskusi...</p>`;
+            const { data, error } = await supabaseClient
+                .from('komentar_tkj')
+                .select('*')
+                .eq('materi_id', materiId)
+                .order('created_at', { ascending: false });
+
+            if (error || !data || data.length === 0) {
+                listEl.innerHTML = `<p style="font-size:0.84rem; color:#64748b;">Belum ada catatan/pertanyaan di materi ini. Jadilah yang pertama!</p>`;
+                return;
+            }
+
+            listEl.innerHTML = data.map(k => `
+                <div class="comment-item">
+                    <strong><i class="fa-solid fa-user-graduate"></i> ${k.nama}</strong>
+                    <p>${k.pesan}</p>
+                </div>
+            `).join('');
+        }
+
+        async function kirimKomentar() {
+            const nama = document.getElementById('namaKomentar').value.trim();
+            const pesan = document.getElementById('isiKomentar').value.trim();
+            if (!nama || !pesan) {
+                alert('Isi nama dan pesan terlebih dahulu!');
+                return;
+            }
+
+            if (!isSupabaseReady) {
+                alert('Isi SUPABASE_URL dan SUPABASE_ANON_KEY di kode terlebih dahulu agar komentar tersimpan!');
+                return;
+            }
+
+            const { error } = await supabaseClient
+                .from('komentar_tkj')
+                .insert([{ materi_id: materiAktifId, nama, pesan }]);
+
+            if (error) {
+                alert('Gagal mengirim komentar: ' + error.message);
+                return;
+            }
+
+            document.getElementById('isiKomentar').value = '';
+            muatKomentar(materiAktifId);
+        }
+
+        // ========================================================
+        // 4. RENDER UI, MODAL & KALKULATOR IP
+        // ========================================================
+        function renderMateri(filterKategori = 'all', keyword = '') {
+            const gridEl = document.getElementById('materiGrid');
+            gridEl.innerHTML = '';
+
+            const filtered = dataMateriTKJ.filter(item => {
+                const cocokKategori = filterKategori === 'all' || item.kategori === filterKategori;
+                const cocokKeyword = item.judul.toLowerCase().includes(keyword.toLowerCase()) ||
+                                     item.ringkasan.toLowerCase().includes(keyword.toLowerCase());
+                return cocokKategori && cocokKeyword;
+            });
+
+            if (filtered.length === 0) {
+                gridEl.innerHTML = `<p style="grid-column: 1/-1; text-align:center; padding: 2rem;">Materi tidak ditemukan.</p>`;
+                return;
+            }
+
+            filtered.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.style.animationDelay = `${index * 0.04}s`;
+                card.innerHTML = `
+                    <div onclick="bukaModal(${item.id})">
+                        <div class="card-header">
+                            <div class="icon-box"><i class="${item.ikon}"></i></div>
+                            <span class="category-badge">${item.label_kategori}</span>
+                        </div>
+                        <h3>${item.judul}</h3>
+                        <p>${item.ringkasan}</p>
+                    </div>
+                    <div class="card-footer">
+                        <span class="btn-baca" onclick="bukaModal(${item.id})">
+                            Buka Panduan <i class="fa-solid fa-arrow-right"></i>
+                        </span>
+                        <button class="btn-like" onclick="tambahLike(event, ${item.id})" title="Sukai materi ini">
+                            <i class="fa-solid fa-heart" style="color:#ef4444;"></i> ${item.likes || 0}
+                        </button>
+                    </div>
+                `;
+                gridEl.appendChild(card);
+            });
+        }
+
+        function bukaModal(id) {
+            const item = dataMateriTKJ.find(m => m.id === id);
+            if (!item) return;
+            materiAktifId = id;
+            document.getElementById('modalCategory').textContent = item.label_kategori;
+            document.getElementById('modalTitle').textContent = item.judul;
+            document.getElementById('modalBody').innerHTML = item.detail;
+            document.getElementById('modalOverlay').classList.add('active');
+            muatKomentar(id);
+        }
+
+        function bukaModalTambah() {
+            document.getElementById('modalTambahOverlay').classList.add('active');
+        }
+
+        function tutupModal(overlayId) {
+            document.getElementById(overlayId).classList.remove('active');
+        }
+
+        // Filter & Search Event
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentFilter = btn.dataset.filter;
+                renderMateri(currentFilter, document.getElementById('searchInput').value);
+            });
+        });
+
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            renderMateri(currentFilter, e.target.value);
+        });
+
+        // Kalkulator Subnetting IPv4
+        function hitungSubnet() {
+            const ipStr = document.getElementById('inputIp').value.trim();
+            const cidr = parseInt(document.getElementById('inputCidr').value);
+            const oktet = ipStr.split('.').map(Number);
+
+            if (oktet.length !== 4 || oktet.some(n => isNaN(n) || n < 0 || n > 255)) {
+                document.getElementById('hasilIp').innerHTML = `<span style="color:#ef4444;">Format IP tidak valid! Contoh: 192.168.1.10</span>`;
+                return;
+            }
+
+            const ipInt = ((oktet[0] << 24) | (oktet[1] << 16) | (oktet[2] << 8) | oktet[3]) >>> 0;
+            const maskInt = (0xffffffff << (32 - cidr)) >>> 0;
+            const netInt = (ipInt & maskInt) >>> 0;
+            const broadInt = (netInt | (~maskInt)) >>> 0;
+            const hostValid = Math.pow(2, 32 - cidr) - 2;
+
+            const intToIp = (num) => [(num >>> 24) & 255, (num >>> 16) & 255, (num >>> 8) & 255, num & 255].join('.');
+
+            document.getElementById('hasilIp').innerHTML = `
+                <strong>Subnet Mask:</strong> ${intToIp(maskInt)}<br>
+                <strong>Network ID:</strong> ${intToIp(netInt)}<br>
+                <strong>Range IP Valid:</strong> ${intToIp(netInt + 1)} - ${intToIp(broadInt - 1)}<br>
+                <strong>Broadcast ID:</strong> ${intToIp(broadInt)}<br>
+                <strong>Total Host Valid:</strong> ${hostValid} perangkat
+            `;
+        }
+
+        // ========================================================
+        // 5. ANIMASI PARTIKEL JARINGAN BACKGROUND (CANVAS)
+        // ========================================================
+        const canvas = document.getElementById('network-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        for (let i = 0; i < 45; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                vx: (Math.random() - 0.5) * 0.7,
+                vy: (Math.random() - 0.5) * 0.7,
+                r: Math.random() * 2.5 + 1.5
+            });
+        }
+
+        function animateNetwork() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particles.length; i++) {
+                let p = particles[i];
+                p.x += p.vx;
+                p.y += p.vy;
+                if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(2, 132, 199, 0.35)';
+                ctx.fill();
+
+                for (let j = i + 1; j < particles.length; j++) {
+                    let p2 = particles[j];
+                    let dist = Math.hypot(p.x - p2.x, p.y - p2.y);
+                    if (dist < 140) {
+                        ctx.beginPath();
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.strokeStyle = `rgba(14, 165, 233, ${0.22 - dist / 650})`;
+                        ctx.lineWidth = 1;
+                        ctx.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(animateNetwork);
+        }
+
+        // Jalankan Aplikasi
+        muatMateriDariSupabase();
+        animateNetwork();
+    </script>
+</body>
+</html>
