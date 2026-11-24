@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TKJ Cloud Hub - Modul, Praktikum & Diskusi Jaringan</title>
+    <title>TKJ Cloud Hub - Modul Lengkap, Praktikum & Diskusi Jaringan</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -14,7 +14,7 @@
             --sky-medium: #0284c7;
             --sky-dark: #0369a1;
             --sky-deep: #0c4a6e;
-            --white-glass: rgba(255, 255, 255, 0.88);
+            --white-glass: rgba(255, 255, 255, 0.9);
             --card-shadow: 0 10px 30px rgba(14, 165, 233, 0.15);
         }
 
@@ -47,7 +47,7 @@
             position: sticky;
             top: 0;
             z-index: 100;
-            background: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(12px);
             border-bottom: 1px solid rgba(14, 165, 233, 0.2);
             padding: 0.9rem 5%;
@@ -125,7 +125,7 @@
         .hero {
             text-align: center;
             padding: 3.5rem 5% 2rem;
-            max-width: 900px;
+            max-width: 920px;
             margin: 0 auto;
         }
 
@@ -210,7 +210,7 @@
             padding: 8px 18px;
             border-radius: 25px;
             border: 1px solid rgba(14, 165, 233, 0.4);
-            background: rgba(255, 255, 255, 0.65);
+            background: rgba(255, 255, 255, 0.7);
             color: var(--sky-dark);
             font-weight: 500;
             cursor: pointer;
@@ -233,7 +233,7 @@
 
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
             gap: 24px;
         }
 
@@ -368,11 +368,11 @@
         .modal-box {
             background: white;
             width: 100%;
-            max-width: 780px;
-            max-height: 90vh;
+            max-width: 840px;
+            max-height: 92vh;
             border-radius: 24px;
             overflow-y: auto;
-            padding: 28px;
+            padding: 30px;
             position: relative;
             box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
             border-top: 6px solid var(--sky-primary);
@@ -393,35 +393,91 @@
         .close-btn:hover { background: #fee2e2; color: #ef4444; }
 
         .modal-title {
-            font-size: 1.55rem;
+            font-size: 1.6rem;
             color: var(--sky-deep);
-            margin: 8px 0 12px;
+            margin: 8px 0 14px;
             padding-right: 40px;
+        }
+
+        .modal-content p {
+            color: #334155;
+            line-height: 1.7;
+            font-size: 0.94rem;
+            margin-bottom: 10px;
         }
 
         .modal-content h4 {
             color: var(--sky-medium);
-            margin: 18px 0 8px;
-            font-size: 1.05rem;
+            margin: 20px 0 8px;
+            font-size: 1.06rem;
+            border-left: 4px solid var(--sky-primary);
+            padding-left: 10px;
         }
 
         .modal-content ul, .modal-content ol {
-            padding-left: 20px;
+            padding-left: 22px;
             color: #334155;
-            line-height: 1.7;
-            font-size: 0.94rem;
+            line-height: 1.75;
+            font-size: 0.93rem;
+            margin-bottom: 12px;
+        }
+
+        .modal-content li {
+            margin-bottom: 6px;
+        }
+
+        .modal-content code {
+            background: #e0f2fe;
+            color: #0369a1;
+            padding: 2px 6px;
+            border-radius: 5px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+        }
+
+        .info-callout {
+            background: #f0f9ff;
+            border-left: 4px solid #0284c7;
+            padding: 12px 16px;
+            border-radius: 0 12px 12px 0;
+            margin: 14px 0;
+            font-size: 0.9rem;
+            color: #0c4a6e;
         }
 
         .code-block {
             background: #0f172a;
             color: #38bdf8;
-            padding: 14px;
+            padding: 15px;
             border-radius: 12px;
             font-family: 'Fira Code', monospace;
             font-size: 0.84rem;
-            margin: 10px 0;
+            margin: 10px 0 14px;
             overflow-x: auto;
-            line-height: 1.55;
+            line-height: 1.6;
+        }
+
+        .code-comment {
+            color: #94a3b8;
+        }
+
+        /* Table inside modal */
+        .spec-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 12px 0;
+            font-size: 0.88rem;
+        }
+
+        .spec-table th, .spec-table td {
+            border: 1px solid #bae6fd;
+            padding: 8px 12px;
+            text-align: left;
+        }
+
+        .spec-table th {
+            background: #e0f2fe;
+            color: var(--sky-deep);
         }
 
         /* Kalkulator IP & Komentar Box */
@@ -430,7 +486,7 @@
             border: 1px solid #bae6fd;
             padding: 18px;
             border-radius: 16px;
-            margin-top: 20px;
+            margin-top: 22px;
         }
 
         .form-group {
@@ -503,7 +559,7 @@
             </button>
             <div class="badge-status" id="db-status">
                 <div class="dot" style="background:#f59e0b;"></div>
-                <span>Mode Lokal (Isi Key Supabase)</span>
+                <span>Menghubungkan Supabase...</span>
             </div>
         </div>
     </nav>
@@ -512,7 +568,7 @@
     <section class="hero">
         <div class="hero-tag"><i class="fa-solid fa-cloud"></i> Terintegrasi GitHub • Supabase • Vercel</div>
         <h1>Portal Modul & Lab Praktikum TKJ</h1>
-        <p>Panduan lengkap perakitan PC, instalasi OS, administrasi server Linux, routing MikroTik & Cisco, kalkulator IP, hingga forum diskusi siswa.</p>
+        <p>Panduan praktikum lengkap mulai dari perakitan hardware PC, instalasi Windows & Ubuntu Server, konfigurasi Apache/Nginx, routing MikroTik & Cisco, kalkulator IP, hingga diskusi siswa.</p>
     </section>
 
     <!-- Search & Filter -->
@@ -522,7 +578,7 @@
             <input type="text" id="searchInput" placeholder="Cari materi... (contoh: MikroTik, IP, Ubuntu, Kabel LAN, Cisco)">
         </div>
         <div class="filter-buttons">
-            <button class="filter-btn active" data-filter="all">Semua Materi</button>
+            <button class="filter-btn active" data-filter="all">Semua Materi (15)</button>
             <button class="filter-btn" data-filter="hardware">Hardware & OS</button>
             <button class="filter-btn" data-filter="server">Linux & Server</button>
             <button class="filter-btn" data-filter="network">Jaringan & Routing</button>
@@ -585,7 +641,7 @@
                     <input type="text" id="newRingkasan" class="form-control" placeholder="Penjelasan singkat materi..." required>
                 </div>
                 <div class="form-group">
-                    <label>Isi Panduan Lengkap (Bisa pakai HTML seperti &lt;p&gt;, &lt;ol&gt;, &lt;li&gt;)</label>
+                    <label>Isi Panduan Lengkap (Bisa pakai tag HTML)</label>
                     <textarea id="newDetail" class="form-control" rows="4" placeholder="<h4>Langkah Praktikum:</h4><ol><li>Langkah pertama...</li></ol>" required></textarea>
                 </div>
                 <button type="submit" class="btn-primary" style="width:100%; justify-content:center;">
@@ -604,7 +660,7 @@
 
     <script>
         // ========================================================
-        // 1. KONFIGURASI SUPABASE (GANTI DENGAN MILIK KAMU)
+        // 1. KONFIGURASI SUPABASE
         // ========================================================
         const SUPABASE_URL = 'https://bmkzydojbfkiotqrvypm.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJta3p5ZG9qYmZraW90cXJ2eXBtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTUyNDQzODksImV4cCI6MjExMDgyMDM4OX0.G1BswCoWHqp_WssZPnzaH5tliQrjiZzvKOqJiWOphiM';
@@ -620,7 +676,7 @@
         }
 
         // ========================================================
-        // 2. DATA MATERI TKJ LENGKAP (15 MODUL UTAMA)
+        // 2. DATA MATERI TKJ LENGKAP & MENDALAM (15 MODUL)
         // ========================================================
         let dataMateriTKJ = [
             {
@@ -629,21 +685,29 @@
                 kategori: "hardware",
                 label_kategori: "Sistem Operasi",
                 ikon: "fa-brands fa-windows",
-                ringkasan: "Pembuatan bootable USB Rufus (GPT/MBR), setting BIOS/UEFI, manajemen partisi disk, dan instalasi driver.",
+                ringkasan: "Pembuatan bootable USB Rufus (GPT/MBR), pengaturan BIOS/UEFI, partisi disk aman, dan instalasi driver pasca-install.",
                 detail: `
-                    <h4>Persiapan Media Instalasi:</h4>
+                    <p>Instalasi sistem operasi Windows 10 merupakan kompetensi dasar wajib dalam TKJ sebelum melakukan konfigurasi jaringan pada komputer client.</p>
+                    <h4>1. Persiapan Alat & Pembuatan Bootable USB:</h4>
                     <ul>
-                        <li>Siapkan file ISO Windows 10 dan Flashdisk kosong minimal 8 GB.</li>
-                        <li>Buka aplikasi <strong>Rufus</strong>, pilih ISO Windows 10, atur <em>Partition Scheme</em> ke <strong>GPT</strong> (untuk UEFI modern) atau <strong>MBR</strong> (untuk BIOS Legacy), lalu klik Start.</li>
+                        <li>Siapkan file <strong>ISO Windows 10 (64-bit)</strong>, Flashdisk minimal <strong>8 GB</strong> (pastikan kosong karena akan diformat), dan aplikasi <strong>Rufus</strong>.</li>
+                        <li>Buka Rufus > pilih <em>Device</em> (Flashdisk) > klik <em>SELECT</em> dan pilih file ISO Windows 10.</li>
+                        <li>Pada bagian <strong>Partition Scheme</strong>: pilih <strong>GPT</strong> (Target system: UEFI) untuk laptop/PC keluaran baru, atau pilih <strong>MBR</strong> (Target system: BIOS/UEFI-CSM) untuk komputer lama.</li>
+                        <li>Klik <strong>START</strong> dan tunggu hingga bar status berwarna hijau penuh (<em>READY</em>).</li>
                     </ul>
-                    <h4>Tahapan Instalasi:</h4>
+                    <h4>2. Pengaturan BIOS/UEFI & Proses Instalasi:</h4>
                     <ol>
-                        <li>Colokkan flashdisk ke PC, nyalakan dan tekan tombol masuk BIOS (<strong>F2 / DEL / F12</strong>).</li>
-                        <li>Arahkan <em>Boot Order #1</em> ke USB Flashdisk, tekan <strong>F10</strong> untuk Save & Exit.</li>
-                        <li>Pilih Bahasa & Keyboard, klik <strong>Install Now</strong>, lalu pilih <em>I don't have a product key</em>.</li>
-                        <li>Pilih edisi <strong>Windows 10 Pro</strong> > centang lisensi > pilih <strong>Custom: Install Windows only</strong>.</li>
-                        <li>Buat partisi sistem (Drive C: minimal 60 GB), klik <strong>Next</strong>, dan tunggu proses penyalinan file selesai hingga masuk desktop.</li>
-                    </ol>`
+                        <li>Colokkan flashdisk ke port USB PC, nyalakan komputer lalu tekan berulang tombol BIOS (umumnya <strong>F2, DEL, F10, atau ESC</strong> tergantung merek motherboard).</li>
+                        <li>Masuk ke tab <strong>Boot</strong>, geser posisi <em>USB Flashdisk / UEFI USB</em> ke urutan paling atas (<strong>Boot Option #1</strong>), lalu tekan <strong>F10 > Yes</strong> untuk menyimpan.</li>
+                        <li>Setelah muncul logo Windows, atur <em>Time and currency format</em> ke <strong>Indonesian (Indonesia)</strong> > klik <strong>Next</strong> > <strong>Install Now</strong>.</li>
+                        <li>Klik <em>I don't have a product key</em> > pilih edisi <strong>Windows 10 Pro</strong> > centang <em>I accept the license terms</em>.</li>
+                        <li>Pilih jenis instalasi <strong>Custom: Install Windows only (advanced)</strong>.</li>
+                        <li><strong>Manajemen Partisi:</strong> Jika harddisk baru, klik <em>New</em> lalu tentukan ukuran partisi sistem C: (misal <code>80000</code> MB = ±80 GB), sisanya buat partisi Data D:. Pilih partisi utama (Primary), lalu klik <strong>Next</strong>.</li>
+                        <li>Tunggu proses penyalinan file hingga PC restart otomatis (cabut flashdisk saat restart agar tidak mengulang dari awal).</li>
+                    </ol>
+                    <div class="info-callout">
+                        <strong>Pasca-Instalasi:</strong> Lakukan pengecekan di <em>Device Manager</em> (<code>devmgmt.msc</code>) untuk memastikan seluruh driver VGA, Audio, dan Ethernet/Wi-Fi sudah terinstal tanpa tanda seru kuning.
+                    </div>`
             },
             {
                 id: 2, likes: 19,
@@ -651,20 +715,20 @@
                 kategori: "server",
                 label_kategori: "Administrasi Server",
                 ikon: "fa-solid fa-terminal",
-                ringkasan: "Konfigurasi OpenSSH Server di Linux Ubuntu/Debian, remote via PuTTY/Terminal, dan keamanan port SSH.",
+                ringkasan: "Mengendalikan server Linux jarak jauh via protokol terenkripsi SSH (Port 22), transfer file SCP, dan hardening keamanan.",
                 detail: `
-                    <h4>Instalasi Layanan SSH di Ubuntu/Debian:</h4>
-                    <div class="code-block">sudo apt update<br>sudo apt install openssh-server -y<br>sudo systemctl status ssh</div>
-                    <h4>Cara Remote dari Komputer Client:</h4>
+                    <p><strong>SSH (Secure Shell)</strong> adalah protokol jaringan kriptografi yang memungkinkan administrator mengendalikan server berbasis teks (CLI) dari jarak jauh melalui jaringan dengan jalur terenkripsi.</p>
+                    <h4>1. Instalasi & Aktivasi OpenSSH di Ubuntu/Debian:</h4>
+                    <div class="code-block"><span class="code-comment"># Update repository dan install paket openssh-server</span><br>sudo apt update && sudo apt install openssh-server -y<br><br><span class="code-comment"># Pastikan layanan SSH berjalan otomatis saat boot</span><br>sudo systemctl enable --now ssh<br>sudo systemctl status ssh</div>
+                    <h4>2. Cara Remote dari Komputer Client:</h4>
                     <ol>
-                        <li>Pastikan PC Client dan Server berada dalam satu jaringan (uji dengan <code>ping IP_Server</code>).</li>
-                        <li>Buka CMD / Terminal di client atau gunakan aplikasi <strong>PuTTY</strong>, lalu jalankan perintah:</li>
+                        <li>Cek alamat IP server menggunakan perintah <code>ip a</code> (misal didapat IP <code>192.168.10.50</code>).</li>
+                        <li>Dari Windows (CMD/PowerShell/PuTTY) atau Terminal Linux client, jalankan perintah koneksi:</li>
                     </ol>
-                    <div class="code-block">ssh nama_user@192.168.1.10</div>
-                    <h4>Tips Keamanan SSH:</h4>
-                    <ul>
-                        <li>Edit konfigurasi di <code>/etc/ssh/sshd_config</code> untuk mengubah default <code>Port 22</code> menjadi port custom (misal <code>Port 2222</code>), lalu restart dengan <code>sudo systemctl restart ssh</code>.</li>
-                    </ul>`
+                    <div class="code-block"><span class="code-comment"># Format: ssh username_server@ip_address_server</span><br>ssh adminserver@192.168.10.50</div>
+                    <p>Ketik <code>yes</code> saat muncul konfirmasi <em>ECDSA key fingerprint</em> pertama kali, lalu masukkan password user server (saat mengetik password di Linux, karakter memang tidak terlihat di layar).</p>
+                    <h4>3. Transfer File Aman via SCP & Hardening Keamanan:</h4>
+                    <div class="code-block"><span class="code-comment"># Mengirim file dari laptop client ke folder home server</span><br>scp laporan.pdf adminserver@192.168.10.50:/home/adminserver/<br><br><span class="code-comment"># Mengubah port default 22 menjadi 2222 demi keamanan</span><br>sudo nano /etc/ssh/sshd_config<br><span class="code-comment"># Ubah baris #Port 22 menjadi Port 2222, lalu restart SSH:</span><br>sudo systemctl restart ssh</div>`
             },
             {
                 id: 3, likes: 15,
@@ -672,20 +736,46 @@
                 kategori: "server",
                 label_kategori: "Virtualisasi",
                 ikon: "fa-brands fa-ubuntu",
-                ringkasan: "Membuat mesin virtual Ubuntu Server/Desktop, konfigurasi RAM/Storage, dan mode jaringan Bridged & Host-Only.",
+                ringkasan: "Membuat mesin virtual (VM), memahami 4 mode jaringan VirtualBox (NAT, Bridged, Host-Only, Internal), dan instalasi Ubuntu.",
                 detail: `
-                    <h4>Langkah Membuat Virtual Machine (VM):</h4>
+                    <p><strong>Oracle VM VirtualBox</strong> adalah perangkat lunak virtualisasi tipe-2 (Hosted Hypervisor) yang memungkinkan kita menjalankan sistem operasi seperti Ubuntu Server, Debian, maupun MikroTik CHR di dalam Windows tanpa mempartisi ulang harddisk asli.</p>
+                    <h4>1. Spesifikasi Pembuatan Virtual Machine (VM):</h4>
                     <ol>
-                        <li>Buka <strong>Oracle VM VirtualBox</strong> > klik tombol <strong>New</strong>.</li>
-                        <li>Isi nama VM (contoh: <code>Ubuntu-Server-24</code>), pilih Type: <strong>Linux</strong>, Version: <strong>Ubuntu (64-bit)</strong>.</li>
-                        <li>Atur Base Memory (RAM) minimal <strong>2048 MB</strong> dan Virtual Hard Disk (VDI) sebesar <strong>25 GB</strong>.</li>
+                        <li>Buka VirtualBox > klik <strong>New</strong>. Beri nama VM (contoh: <code>Ubuntu-Server-Lab</code>), arahkan ke file ISO Ubuntu, dan centang <em>Skip Unattended Installation</em> agar kita bisa mengatur partisi & jaringan secara manual.</li>
+                        <li><strong>Hardware:</strong> Alokasikan Base Memory (RAM) minimal <strong>2048 MB (2 GB)</strong> dan Processor <strong>2 CPU</strong>.</li>
+                        <li><strong>Virtual Hard Disk:</strong> Pilih <em>Create a Virtual Hard Disk Now</em> dengan ukuran minimal <strong>25 GB</strong> (tipe VDI, Dynamically Allocated).</li>
                     </ol>
-                    <h4>Pengaturan Jaringan VirtualBox (Penting untuk TKJ):</h4>
-                    <ul>
-                        <li><strong>Bridged Adapter:</strong> VM mendapatkan IP langsung dari router fisik (sejajar dengan laptop asli).</li>
-                        <li><strong>Host-Only Adapter:</strong> Membuat jaringan lokal tertutup antara laptop asli (Host) dengan VM (Guest) tanpa butuh internet.</li>
-                        <li><strong>Internal Network:</strong> Menghubungkan sesama VM (misal VM MikroTik ke VM Ubuntu Client).</li>
-                    </ul>`
+                    <h4>2. Memahami Mode Jaringan VirtualBox (Kunci Sukses Lab TKJ):</h4>
+                    <table class="spec-table">
+                        <tr>
+                            <th>Mode Network</th>
+                            <th>Fungsi & Cara Kerja</th>
+                            <th>Kapan Digunakan?</th>
+                        </tr>
+                        <tr>
+                            <td><strong>NAT</strong></td>
+                            <td>VM mendapat internet dari laptop host (IP 10.0.2.15), tapi tidak bisa di-ping dari luar.</td>
+                            <td>Saat baru mau <code>apt update</code> / install paket saja.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Bridged Adapter</strong></td>
+                            <td>VM dianggap sebagai perangkat fisik baru yang langsung meminta IP ke Wi-Fi/Router lab.</td>
+                            <td>Saat praktik SSH, Web Server, atau diakses dari HP/PC lain.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Host-Only Adapter</strong></td>
+                            <td>Jaringan lokal privat antara Laptop Host dan VM tanpa butuh koneksi internet/Wi-Fi.</td>
+                            <td>Praktikum mandiri offline di laptop sendiri.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Internal Network</strong></td>
+                            <td>Jaringan terisolasi khusus antar sesama VM saja (misal Router VM ke Client VM).</td>
+                            <td>Simulasi topologi kompleks (MikroTik + Ubuntu + Windows).</td>
+                        </tr>
+                    </table>
+                    <div class="info-callout">
+                        <strong>Tips Praktikum:</strong> Gunakan <strong>2 Adapter Network</strong> pada Ubuntu Server: Adapter 1 diset ke <strong>NAT</strong> (untuk sumber internet download paket) dan Adapter 2 diset ke <strong>Host-Only Adapter</strong> (untuk IP statis lokal menuju client).
+                    </div>`
             },
             {
                 id: 4, likes: 24,
@@ -693,17 +783,20 @@
                 kategori: "server",
                 label_kategori: "Web Server",
                 ikon: "fa-solid fa-globe",
-                ringkasan: "Instalasi Apache2 di Ubuntu, struktur direktori /var/www/html, dan pembuatan VirtualHost multi-domain.",
+                ringkasan: "Instalasi Apache2 di Ubuntu, struktur direktori /var/www/html, konfigurasi VirtualHost domain, dan dukungan PHP.",
                 detail: `
-                    <h4>Instalasi Web Server Apache2:</h4>
-                    <div class="code-block">sudo apt update<br>sudo apt install apache2 -y<br>sudo ufw allow 'Apache Full'</div>
-                    <h4>Lokasi File Konfigurasi Penting:</h4>
+                    <p><strong>Apache HTTP Server (Apache2)</strong> adalah salah satu web server open-source paling populer di dunia yang bertugas melayani permintaan halaman web melalui protokol HTTP (Port 80) dan HTTPS (Port 443).</p>
+                    <h4>1. Instalasi Apache2 & Modul PHP di Ubuntu:</h4>
+                    <div class="code-block">sudo apt update<br>sudo apt install apache2 php libapache2-mod-php -y<br><br><span class="code-comment"># Izinkan trafik web melewati firewall UFW</span><br>sudo ufw allow 'Apache Full'<br>sudo systemctl status apache2</div>
+                    <h4>2. Struktur Direktori Penting Apache2:</h4>
                     <ul>
-                        <li><code>/var/www/html/index.html</code> : Halaman web utama yang tampil saat IP server diakses dari browser.</li>
-                        <li><code>/etc/apache2/sites-available/</code> : Direktori untuk membuat konfigurasi domain (VirtualHost).</li>
+                        <li><code>/var/www/html/</code> : Direktori <em>DocumentRoot</em> default tempat menyimpan file HTML/PHP website.</li>
+                        <li><code>/etc/apache2/apache2.conf</code> : File konfigurasi global utama Apache2.</li>
+                        <li><code>/etc/apache2/sites-available/</code> : Tempat menyimpan file konfigurasi VirtualHost (domain).</li>
+                        <li><code>/var/log/apache2/error.log</code> : File log untuk melacak penyebab jika website error (misal Error 500/403).</li>
                     </ul>
-                    <h4>Membuat VirtualHost Baru:</h4>
-                    <div class="code-block">sudo cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/tkj.conf<br>sudo a2ensite tkj.conf<br>sudo systemctl reload apache2</div>`
+                    <h4>3. Konfigurasi VirtualHost (Hosting Multi-Domain):</h4>
+                    <div class="code-block"><span class="code-comment"># 1. Buat folder khusus untuk website baru</span><br>sudo mkdir -p /var/www/portaltkj<br>sudo chown -R $USER:$USER /var/www/portaltkj<br>echo "&lt;h1&gt;Selamat Datang di Server TKJ!&lt;/h1&gt;" &gt; /var/www/portaltkj/index.html<br><br><span class="code-comment"># 2. Salin konfigurasi default dan aktifkan</span><br>sudo cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/portaltkj.conf<br><span class="code-comment"># (Ubah DocumentRoot menjadi /var/www/portaltkj dan ServerName portaltkj.local)</span><br>sudo a2ensite portaltkj.conf<br>sudo systemctl reload apache2</div>`
             },
             {
                 id: 5, likes: 10,
@@ -711,17 +804,27 @@
                 kategori: "network",
                 label_kategori: "Konfigurasi IP",
                 ikon: "fa-solid fa-ethernet",
-                ringkasan: "Mengatur IP Address Static dan DHCP pada Windows 10/11 melalui Control Panel (ncpa.cpl) dan Command Prompt.",
+                ringkasan: "Mengatur IP Address Static dan DHCP pada Windows 10/11 via Control Panel (ncpa.cpl) dan skrip CMD Netsh.",
                 detail: `
-                    <h4>Metode 1: Lewat Control Panel (GUI)</h4>
+                    <p>Mengatur alamat IP secara manual (<strong>Static IP</strong>) sangat penting saat menghubungkan komputer ke router, switch, atau server lokal yang tidak memiliki layanan DHCP Server.</p>
+                    <h4>1. Metode GUI melalui Network Connections (ncpa.cpl):</h4>
                     <ol>
-                        <li>Tekan tombol <strong>Windows + R</strong>, ketik <code>ncpa.cpl</code> lalu tekan Enter.</li>
-                        <li>Klik kanan pada adapter <strong>Ethernet</strong> atau <strong>Wi-Fi</strong> > pilih <strong>Properties</strong>.</li>
-                        <li>Klik dua kali pada <strong>Internet Protocol Version 4 (TCP/IPv4)</strong>.</li>
-                        <li>Pilih <em>Use the following IP address</em> dan masukkan IP Address (misal <code>192.168.10.2</code>), Subnet Mask (<code>255.255.255.0</code>), dan Default Gateway (<code>192.168.10.1</code>).</li>
+                        <li>Tekan tombol kombinasi <strong>Windows + R</strong> pada keyboard untuk membuka jendela <em>Run</em>.</li>
+                        <li>Ketik perintah <code>ncpa.cpl</code> lalu tekan <strong>Enter</strong>.</li>
+                        <li>Klik kanan pada interface jaringan yang aktif (<strong>Ethernet</strong> untuk kabel LAN atau <strong>Wi-Fi</strong> untuk nirkabel) > pilih <strong>Properties</strong>.</li>
+                        <li>Cari dan klik dua kali pada item <strong>Internet Protocol Version 4 (TCP/IPv4)</strong>.</li>
+                        <li>Pilih opsi <strong>Use the following IP address</strong> dan isi parameter sesuai topologi:
+                            <ul>
+                                <li><strong>IP address:</strong> <code>192.168.10.2</code> (harus unik, tidak boleh bentrok dengan perangkat lain)</li>
+                                <li><strong>Subnet mask:</strong> <code>255.255.255.0</code> (otomatis terisi untuk kelas C)</li>
+                                <li><strong>Default gateway:</strong> <code>192.168.10.1</code> (alamat IP interface router)</li>
+                                <li><strong>Preferred DNS server:</strong> <code>8.8.8.8</code> (DNS Google) & Alternate: <code>8.8.4.4</code></li>
+                            </ul>
+                        </li>
+                        <li>Klik <strong>OK</strong> pada semua jendela untuk menerapkan konfigurasi.</li>
                     </ol>
-                    <h4>Metode 2: Cepat Lewat CMD (Run as Administrator)</h4>
-                    <div class="code-block">netsh interface ip set address name="Ethernet" static 192.168.10.2 255.255.255.0 192.168.10.1<br>netsh interface ip set dns name="Ethernet" static 8.8.8.8</div>`
+                    <h4>2. Metode Cepat via Command Prompt (CMD Administrator):</h4>
+                    <div class="code-block"><span class="code-comment">:: Set IP Statis pada adapter bernama "Ethernet"</span><br>netsh interface ip set address name="Ethernet" static 192.168.10.2 255.255.255.0 192.168.10.1<br><br><span class="code-comment">:: Kembalikan ke mode otomatis (DHCP)</span><br>netsh interface ip set address name="Ethernet" source=dhcp</div>`
             },
             {
                 id: 6, likes: 31,
@@ -729,25 +832,37 @@
                 kategori: "network",
                 label_kategori: "Infrastruktur Fisik",
                 ikon: "fa-solid fa-plug",
-                ringkasan: "Standar warna kabel Straight (T568B) dan Crossover (T568A), teknik crimping RJ45, dan pengujian LAN Tester.",
+                ringkasan: "Standar internasional TIA/EIA-568B (Straight) dan 568A (Crossover), teknik crimping RJ45 presisi, dan pengujian LAN Tester.",
                 detail: `
-                    <h4>Susunan Warna Kabel Straight (Standar T568B):</h4>
-                    <ol>
-                        <li><strong>Putih Oranye</strong> (Tx+)</li>
-                        <li><strong>Oranye</strong> (Tx-)</li>
-                        <li><strong>Putih Hijau</strong> (Rx+)</li>
-                        <li><strong>Biru</strong></li>
-                        <li><strong>Putih Biru</strong></li>
-                        <li><strong>Hijau</strong> (Rx-)</li>
-                        <li><strong>Putih Cokelat</strong></li>
-                        <li><strong>Cokelat</strong></li>
-                    </ol>
-                    <h4>Perbedaan Penggunaan:</h4>
+                    <p>Kabel <strong>UTP (Unshielded Twisted Pair)</strong> kategori Cat5e atau Cat6 merupakan media transmisi utama pada jaringan lokal (LAN) dengan konektor <strong>RJ45</strong>.</p>
+                    <h4>1. Susunan Warna Standar Internasional:</h4>
+                    <table class="spec-table">
+                        <tr>
+                            <th>Pin RJ45</th>
+                            <th>Standar T568B (Straight)</th>
+                            <th>Standar T568A (Ujung 1 Crossover)</th>
+                        </tr>
+                        <tr><td><strong>Pin 1</strong></td><td>Putih Oranye</td><td>Putih Hijau</td></tr>
+                        <tr><td><strong>Pin 2</strong></td><td>Oranye</td><td>Hijau</td></tr>
+                        <tr><td><strong>Pin 3</strong></td><td>Putih Hijau</td><td>Putih Oranye</td></tr>
+                        <tr><td><strong>Pin 4</strong></td><td>Biru</td><td>Biru</td></tr>
+                        <tr><td><strong>Pin 5</strong></td><td>Putih Biru</td><td>Putih Biru</td></tr>
+                        <tr><td><strong>Pin 6</strong></td><td>Hijau</td><td>Oranye</td></tr>
+                        <tr><td><strong>Pin 7</strong></td><td>Putih Cokelat</td><td>Putih Cokelat</td></tr>
+                        <tr><td><strong>Pin 8</strong></td><td>Cokelat</td><td>Cokelat</td></tr>
+                    </table>
+                    <h4>2. Fungsi Kabel Straight vs Crossover:</h4>
                     <ul>
-                        <li><strong>Straight-Through (T568B - T568B):</strong> Untuk perangkat berbeda jenis (PC ke Switch, Switch ke Router).</li>
-                        <li><strong>Cross-Over (T568A - T568B):</strong> Untuk perangkat sejenis (PC ke PC, Switch ke Switch lama).</li>
-                        <li>Pastikan saat diuji dengan <strong>LAN Tester</strong>, lampu indikator 1 sampai 8 menyala berurutan tanpa ada yang mati.</li>
-                    </ul>`
+                        <li><strong>Kabel Straight-Through (T568B ke T568B):</strong> Menghubungkan dua perangkat yang berbeda jenis, seperti <em>PC ke Switch</em>, <em>PC ke Router</em>, atau <em>Switch ke Router</em>.</li>
+                        <li><strong>Kabel Cross-Over (T568A ke T568B):</strong> Menghubungkan dua perangkat yang sejenis, seperti <em>PC ke PC</em> secara langsung, atau <em>Switch ke Switch</em> generasi lama (tanpa fitur Auto-MDIX).</li>
+                    </ul>
+                    <h4>3. Langkah Crimping & Pengujian:</h4>
+                    <ol>
+                        <li>Kupas kulit luar kabel UTP sepanjang ±2 cm menggunakan pisau pada <strong>Tang Crimping</strong> (hati-hati jangan melukai isolator kabel dalam).</li>
+                        <li>Luruskan ke-8 helai kabel dan urutkan sesuai standar T568B, lalu potong ujungnya secara rata sepanjang ±1,2 cm.</li>
+                        <li>Masukkan kabel ke konektor RJ45 dengan posisi <strong>klip pengunci menghadap ke bawah</strong> hingga ujung tembaga menyentuh bagian depan konektor dan kulit luar kabel ikut masuk ke dalam penjepit RJ45.</li>
+                        <li>Jepit kuat menggunakan Tang Crimping hingga terdengar bunyi <em>klik</em>, lalu uji kedua ujung menggunakan <strong>LAN Tester</strong> (lampu 1–8 harus menyala berurutan).</li>
+                    </ol>`
             },
             {
                 id: 7, likes: 14,
@@ -755,15 +870,21 @@
                 kategori: "server",
                 label_kategori: "Sistem File Linux",
                 ikon: "fa-solid fa-folder-tree",
-                ringkasan: "Manajemen direktori CLI Linux (ls, cd, mkdir, cp, mv, rm) serta pengaturan hak akses chmod & chown.",
+                ringkasan: "Struktur direktori FHS Linux, perintah manipulasi file CLI, manajemen kepemilikan chown, dan perhitungan izin chmod.",
                 detail: `
-                    <h4>Perintah Navigasi & Manajemen File Linux:</h4>
-                    <div class="code-block">pwd                   # Cek posisi direktori saat ini<br>ls -la                # Tampilkan semua file beserta hak aksesnya<br>mkdir -p lab/tkj      # Membuat folder bertingkat<br>cp sumber.txt tujuan/ # Menyalin file<br>mv lama.txt baru.txt  # Memindahkan atau mengganti nama file<br>rm -rf nama_folder    # Menghapus folder secara permanen</div>
-                    <h4>Hak Akses File (chmod):</h4>
+                    <p>Dalam administrasi server Linux tanpa tampilan grafis (GUI), penguasaan manajemen file dan hak akses (<em>File Permissions</em>) sangat vital agar aplikasi web maupun database dapat berjalan aman.</p>
+                    <h4>1. Hierarki Direktori Penting di Linux:</h4>
                     <ul>
-                        <li>Angka oktal: <strong>4 = Read (r)</strong>, <strong>2 = Write (w)</strong>, <strong>1 = Execute (x)</strong>.</li>
-                        <li><code>chmod 755 file.sh</code> memberikan akses penuh (rwx) ke Owner, dan akses baca+eksekusi (r-x) ke Group & Others.</li>
-                    </ul>`
+                        <li><code>/etc</code> : Menyimpan seluruh file konfigurasi sistem dan layanan (SSH, Apache, Bind9, Netplan).</li>
+                        <li><code>/var/www</code> : Lokasi penyimpanan file website pada web server.</li>
+                        <li><code>/home</code> : Direktori pribadi untuk setiap pengguna biasa.</li>
+                        <li><code>/var/log</code> : Menyimpan catatan log aktivitas dan error sistem.</li>
+                    </ul>
+                    <h4>2. Perintah Dasar Manipulasi File & Direktori:</h4>
+                    <div class="code-block">mkdir -p proyek/web/assets   <span class="code-comment"># Membuat folder bertingkat sekaligus</span><br>touch index.html style.css   <span class="code-comment"># Membuat file kosong baru</span><br>cp -r proyek/ backup_proyek/ <span class="code-comment"># Menyalin folder beserta seluruh isinya</span><br>mv style.css main.css        <span class="code-comment"># Mengganti nama (rename) atau memindah file</span><br>rm -rf backup_proyek/        <span class="code-comment"># Menghapus folder & isinya secara paksa</span></div>
+                    <h4>3. Perhitungan Hak Akses (chmod & chown):</h4>
+                    <p>Setiap file memiliki 3 kelompok pemilik: <strong>Owner (u)</strong>, <strong>Group (g)</strong>, dan <strong>Others (o)</strong> dengan nilai oktal: <strong>Read (r) = 4</strong>, <strong>Write (w) = 2</strong>, <strong>Execute (x) = 1</strong>.</p>
+                    <div class="code-block"><span class="code-comment"># 755 = Owner(4+2+1=7: rwx), Group(4+0+1=5: r-x), Others(4+0+1=5: r-x)</span><br>sudo chmod 755 /var/www/html<br><br><span class="code-comment"># Mengubah pemilik folder menjadi user web server (www-data)</span><br>sudo chown -R www-data:www-data /var/www/html</div>`
             },
             {
                 id: 8, likes: 22,
@@ -771,16 +892,26 @@
                 kategori: "hardware",
                 label_kategori: "Perakitan Komputer",
                 ikon: "fa-solid fa-microchip",
-                ringkasan: "Panduan lengkap merakit komponen PC: Motherboard, CPU, Thermal Paste, RAM, SSD, PSU, hingga kabel Front Panel.",
+                ringkasan: "Prosedur K3 perakitan komputer, pemasangan CPU, Thermal Paste, RAM Dual-Channel, manajemen kabel PSU, dan Front Panel.",
                 detail: `
-                    <h4>Urutan Perakitan PC yang Aman:</h4>
+                    <p>Perakitan PC membutuhkan ketelitian dan penerapan prosedur K3 (keselamatan kerja, seperti membuang listrik statis tubuh sebelum menyentuh komponen elektronik).</p>
+                    <h4>Langkah-Langkah Perakitan PC secara Sistematis:</h4>
                     <ol>
-                        <li><strong>Pasang Processor (CPU):</strong> Buka tuas pengunci soket motherboard, sejajarkan tanda segitiga emas pada CPU dengan soket, tutup pengunci, oleskan <em>thermal paste</em> sebesar biji kacang hijau, lalu pasang Heatsink/Cooler.</li>
-                        <li><strong>Pasang RAM:</strong> Buka pengait slot DIMM, sesuaikan lekukan pada keping RAM, tekan kedua ujung hingga pengait mengunci otomatis.</li>
-                        <li><strong>Pasang Motherboard ke Casing:</strong> Pasang plat I/O Shield di bagian belakang casing, lalu baut motherboard pada dudukan <em>standoff</em> kuningan.</li>
-                        <li><strong>Pasang Storage & PSU:</strong> Pasang SSD NVMe/SATA dan Power Supply Unit (PSU).</li>
-                        <li><strong>Kabel Daya & Front Panel:</strong> Hubungkan kabel 24-pin ATX, 8-pin CPU, kabel SATA, dan pin kecil Front Panel (<strong>POWER SW, RESET SW, HDD LED, POWER LED</strong>).</li>
-                    </ol>`
+                        <li><strong>Pemasangan Processor (CPU):</strong> Buka tuas pengunci soket pada motherboard (LGA untuk Intel / AM4-AM5 untuk AMD). Cocokkan tanda segitiga kecil di sudut CPU dengan sudut soket, letakkan perlahan tanpa ditekan paksa, lalu kunci kembali tuasnya.</li>
+                        <li><strong>Oleskan Thermal Paste & Pasang Heatsink:</strong> Oleskan pasta termal sebesar biji kacang hijau di tengah permukaan CPU, lalu pasang <em>CPU Cooler/Heatsink</em> dan colokkan kabel kipas ke pin <strong>CPU_FAN</strong>.</li>
+                        <li><strong>Pemasangan RAM (Memory):</strong> Buka pengunci slot DIMM. Jika memasang 2 keping RAM pada motherboard 4 slot, pasang di slot warna sama (misal <strong>Slot A2 dan B2</strong>) agar fitur <em>Dual-Channel</em> aktif. Tekan hingga pengunci berbunyi klik.</li>
+                        <li><strong>Memasang Motherboard ke Casing:</strong> Pasang plat belakang <em>I/O Shield</em> terlebih dahulu, pastikan dudukan baut kuningan (<em>standoff</em>) sesuai lubang motherboard, lalu kencangkan sekrup secara menyilang.</li>
+                        <li><strong>Pemasangan Storage & PSU:</strong> Pasang SSD M.2 NVMe langsung di motherboard atau SSD/HDD SATA di rak casing, lalu pasang <em>Power Supply Unit (PSU)</em>.</li>
+                        <li><strong>Koneksi Kabel Daya & Front Panel:</strong>
+                            <ul>
+                                <li>Hubungkan kabel daya utama <strong>24-pin ATX</strong> dan kabel daya prosesor <strong>4+4 pin CPU</strong>.</li>
+                                <li>Hubungkan pin kecil <strong>Front Panel (F_PANEL)</strong>: <code>POWER SW</code>, <code>RESET SW</code>, <code>HDD LED (+/-)</code>, dan <code>POWER LED (+/-)</code>.</li>
+                            </ul>
+                        </li>
+                    </ol>
+                    <div class="info-callout">
+                        <strong>Troubleshooting Bunyi Beep BIOS:</strong> Jika saat dinyalakan layar tidak tampil dan terdengar bunyi <em>beep</em> panjang berulang, umumnya penyebabnya adalah keping <strong>RAM kurang menancap</strong> atau pin kuningan RAM kotor (bersihkan perlahan dengan penghapus pensil).
+                    </div>`
             },
             {
                 id: 9, likes: 45,
@@ -788,11 +919,22 @@
                 kategori: "network",
                 label_kategori: "RouterOS",
                 ikon: "fa-solid fa-router",
-                ringkasan: "Setting MikroTik dari nol via Winbox: DHCP Client, IP Address, Firewall NAT Masquerade, DNS, dan DHCP Server.",
+                ringkasan: "Konfigurasi Router MikroTik sebagai Internet Gateway via Winbox: DHCP Client, IP LAN, DNS, NAT Masquerade, dan DHCP Server.",
                 detail: `
-                    <h4>Skrip Konfigurasi Dasar Internet Gateway (New Terminal):</h4>
-                    <div class="code-block"># 1. Minta IP otomatis dari ISP di ether1<br>/ip dhcp-client add interface=ether1 disabled=no<br><br># 2. Beri IP Lokal pada ether2 (LAN)<br>/ip address add address=192.168.50.1/24 interface=ether2<br><br># 3. Atur DNS Google<br>/ip dns set servers=8.8.8.8,8.8.4.4 allow-remote-requests=yes<br><br># 4. Aktifkan NAT Masquerade agar client bisa internetan<br>/ip firewall nat add chain=srcnat out-interface=ether1 action=masquerade</div>
-                    <p>Terakhir, buka menu <strong>IP > DHCP Server > DHCP Setup</strong>, pilih <code>ether2</code>, dan klik Next hingga selesai agar PC client mendapat IP otomatis.</p>`
+                    <p><strong>MikroTik RouterOS</strong> adalah sistem operasi jaringan yang sangat populer di Indonesia untuk manajemen bandwidth, routing, hotspot, dan firewall.</p>
+                    <h4>Skenario Topologi Dasar:</h4>
+                    <ul>
+                        <li><code>ether1</code> : Terhubung ke Modem/Router ISP (sumber internet).</li>
+                        <li><code>ether2</code> : Terhubung ke Switch / Laptop Client (jaringan lokal <code>192.168.50.0/24</code>).</li>
+                    </ul>
+                    <h4>Skrip Konfigurasi Lengkap via New Terminal (Winbox):</h4>
+                    <div class="code-block"><span class="code-comment"># 1. Beri identitas nama router agar mudah dikenali</span><br>/system identity set name="Router-Lab-TKJ"<br><br><span class="code-comment"># 2. Minta IP otomatis dari ISP pada interface ether1</span><br>/ip dhcp-client add interface=ether1 disabled=no<br><br><span class="code-comment"># 3. Pasang IP Gateway untuk jaringan lokal di ether2</span><br>/ip address add address=192.168.50.1/24 interface=ether2<br><br><span class="code-comment"># 4. Konfigurasi DNS Server</span><br>/ip dns set servers=8.8.8.8,1.1.1.1 allow-remote-requests=yes<br><br><span class="code-comment"># 5. Aktifkan Firewall NAT Masquerade (wajib agar client bisa internetan)</span><br>/ip firewall nat add chain=srcnat out-interface=ether1 action=masquerade</div>
+                    <h4>Mengaktifkan DHCP Server untuk Client (Menu Winbox):</h4>
+                    <ol>
+                        <li>Buka menu <strong>IP > DHCP Server</strong> > klik tombol <strong>DHCP Setup</strong>.</li>
+                        <li>Pilih <em>DHCP Server Interface</em>: <code>ether2</code> > klik <strong>Next</strong> terus hingga muncul pesan <em>Setup has completed successfully</em>.</li>
+                        <li>Uji koneksi dari New Terminal dengan perintah <code>ping 8.8.8.8</code> dan <code>ping google.com</code>.</li>
+                    </ol>`
             },
             {
                 id: 10, likes: 27,
@@ -800,12 +942,19 @@
                 kategori: "network",
                 label_kategori: "Cisco IOS",
                 ikon: "fa-solid fa-diagram-project",
-                ringkasan: "Konfigurasi Router dan Switch Cisco menggunakan IOS CLI: IP Interface, VLAN, Trunking, dan Static Routing.",
+                ringkasan: "Mode navigasi Cisco IOS CLI, konfigurasi IP Interface Router, manajemen VLAN Switch, serta Static Routing antar jaringan.",
                 detail: `
-                    <h4>Konfigurasi IP Interface pada Router Cisco:</h4>
-                    <div class="code-block">Router> enable<br>Router# configure terminal<br>Router(config)# hostname R1-TKJ<br>R1-TKJ(config)# interface gigabitEthernet 0/0<br>R1-TKJ(config-if)# ip address 192.168.10.1 255.255.255.0<br>R1-TKJ(config-if)# no shutdown<br>R1-TKJ(config-if)# exit<br>R1-TKJ(config)# do write memory</div>
-                    <h4>Konfigurasi VLAN pada Switch Cisco:</h4>
-                    <div class="code-block">Switch(config)# vlan 10<br>Switch(config-vlan)# name LAB_ADMIN<br>Switch(config-vlan)# exit<br>Switch(config)# interface fastEthernet 0/1<br>Switch(config-if)# switchport mode access<br>Switch(config-if)# switchport access vlan 10</div>`
+                    <p>Perangkat jaringan <strong>Cisco</strong> menggunakan sistem operasi <strong>Cisco IOS</strong> yang dikonfigurasi melalui baris perintah (CLI) dengan tingkatan hak akses bertahap.</p>
+                    <h4>1. Tingkatan Mode pada Cisco IOS:</h4>
+                    <ul>
+                        <li><code>Router&gt;</code> : <strong>User EXEC Mode</strong> (hanya bisa melihat status dasar).</li>
+                        <li><code>Router#</code> : <strong>Privileged EXEC Mode</strong> (ketik <code>enable</code> untuk masuk; bisa melihat konfigurasi & menyimpan).</li>
+                        <li><code>Router(config)#</code> : <strong>Global Configuration Mode</strong> (ketik <code>configure terminal</code>; tempat mengubah konfigurasi router).</li>
+                    </ul>
+                    <h4>2. Konfigurasi IP Interface & Static Route pada Router Cisco:</h4>
+                    <div class="code-block">Router&gt; enable<br>Router# configure terminal<br>Router(config)# hostname R1-TKJ<br>R1-TKJ(config)# interface gigabitEthernet 0/0<br>R1-TKJ(config-if)# ip address 192.168.10.1 255.255.255.0<br>R1-TKJ(config-if)# no shutdown   <span class="code-comment">! Wajib diketik karena port router Cisco default-nya mati</span><br>R1-TKJ(config-if)# exit<br><br><span class="code-comment">! Contoh Static Routing menuju network 192.168.20.0/24 via next-hop 10.10.10.2</span><br>R1-TKJ(config)# ip route 192.168.20.0 255.255.255.0 10.10.10.2<br>R1-TKJ(config)# do write memory   <span class="code-comment">! Menyimpan konfigurasi ke NVRAM agar tidak hilang saat restart</span></div>
+                    <h4>3. Konfigurasi VLAN & Trunking pada Switch Cisco:</h4>
+                    <div class="code-block">Switch(config)# vlan 10<br>Switch(config-vlan)# name LAB_TKJ_1<br>Switch(config-vlan)# exit<br>Switch(config)# interface fastEthernet 0/1<br>Switch(config-if)# switchport mode access<br>Switch(config-if)# switchport access vlan 10<br><br><span class="code-comment">! Mengatur port penghubung antar switch/router sebagai Trunk</span><br>Switch(config)# interface gigabitEthernet 0/1<br>Switch(config-if)# switchport mode trunk</div>`
             },
             {
                 id: 11, likes: 16,
@@ -813,11 +962,15 @@
                 kategori: "server",
                 label_kategori: "Web Server Modern",
                 ikon: "fa-solid fa-server",
-                ringkasan: "Instalasi Nginx sebagai web server performa tinggi dan reverse proxy, serta deployment aplikasi web ke Vercel.",
+                ringkasan: "Arsitektur Nginx, instalasi di Ubuntu, konfigurasi Reverse Proxy untuk aplikasi Node.js/Python, serta deployment modern.",
                 detail: `
-                    <h4>Instalasi Nginx di Ubuntu Server:</h4>
-                    <div class="code-block">sudo apt update<br>sudo apt install nginx -y<br>sudo systemctl enable --now nginx</div>
-                    <p>Direktori root default Nginx berada di <code>/var/www/html</code>, sedangkan file konfigurasi server block berada di <code>/etc/nginx/sites-available/default</code>. Nginx sangat populer karena mampu menangani ribuan koneksi bersamaan dengan konsumsi memori sangat rendah.</p>`
+                    <p><strong>Nginx</strong> (dibaca <em>Engine-X</em>) adalah web server modern berkinerja tinggi yang bekerja menggunakan arsitektur <em>event-driven asynchronous</em>, sehingga mampu melayani puluhan ribu koneksi serentak dengan penggunaan RAM yang sangat kecil.</p>
+                    <h4>1. Instalasi Nginx di Ubuntu Server:</h4>
+                    <div class="code-block">sudo apt update<br>sudo apt install nginx -y<br>sudo ufw allow 'Nginx Full'<br>sudo systemctl status nginx</div>
+                    <h4>2. Konfigurasi Nginx sebagai Reverse Proxy:</h4>
+                    <p>Selain menyajikan file statis di <code>/var/www/html</code>, Nginx sering digunakan untuk meneruskan trafik domain (Port 80) ke aplikasi backend yang berjalan di port internal (misalnya Port 3000):</p>
+                    <div class="code-block">server {<br>    listen 80;<br>    server_name app.tkjcloud.local;<br><br>    location / {<br>        proxy_pass http://127.0.0.1:3000;<br>        proxy_set_header Host $host;<br>        proxy_set_header X-Real-IP $remote_addr;<br>    }<br>}</div>
+                    <p>Setelah mengedit konfigurasi di <code>/etc/nginx/sites-available/default</code>, selalu uji sintaks dengan perintah <code>sudo nginx -t</code> sebelum menjalankan <code>sudo systemctl reload nginx</code>.</p>`
             },
             {
                 id: 12, likes: 29,
@@ -825,12 +978,14 @@
                 kategori: "network",
                 label_kategori: "Tunneling & Port Forwarding",
                 ikon: "fa-solid fa-shield-halved",
-                ringkasan: "Mengekspos server lokal localhost/LAN ke internet publik secara aman tanpa perlu IP Public Statis.",
+                ringkasan: "Mengekspos server lokal (localhost/LAN) di balik NAT ISP ke internet publik ber-HTTPS tanpa memerlukan IP Public Statis.",
                 detail: `
-                    <h4>Fungsi Tunneling di TKJ:</h4>
-                    <p>Saat server Ubuntu atau XAMPP berjalan di jaringan lokal sekolah (di balik NAT ISP), orang dari luar tidak bisa mengaksesnya. Tunneling membuat jalur terenkripsi keluar ke server cloud sehingga web lokal punya link HTTPS publik.</p>
-                    <h4>Perintah Cepat Menjalankan Tunnel:</h4>
-                    <div class="code-block"># Opsi 1: Menggunakan Cloudflare Tunnel (Gratis tanpa daftar)<br>cloudflared tunnel --url http://localhost:80<br><br># Opsi 2: Menggunakan Ngrok<br>ngrok http 80</div>`
+                    <p><strong>Tunneling</strong> adalah metode membungkus paket data di dalam jalur terenkripsi menuju server perantara di cloud. Teknik ini menjadi solusi utama ketika server sekolah atau rumah berada di balik jaringan NAT ISP (<em>CGNAT</em>) dan tidak memiliki IP Public Statis.</p>
+                    <h4>1. Menggunakan Cloudflare Tunnel (Gratis & Tanpa Batas Waktu):</h4>
+                    <div class="code-block"><span class="code-comment"># Download & install cloudflared di Ubuntu/Debian</span><br>curl -L --output cloudflared.deb https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb<br>sudo dpkg -i cloudflared.deb<br><br><span class="code-comment"># Membuat link HTTPS publik instan untuk web server lokal port 80</span><br>cloudflared tunnel --url http://localhost:80</div>
+                    <p>Setelah dijalankan, terminal akan menampilkan URL publik otomatis berakhiran <code>.trycloudflare.com</code> yang langsung bisa dibuka dari HP menggunakan paket data seluler.</p>
+                    <h4>2. Menggunakan Ngrok (Alternatif Populer):</h4>
+                    <div class="code-block"><span class="code-comment"># Mengekspos web server port 80 atau layanan SSH port 22</span><br>ngrok http 80<br>ngrok tcp 22</div>`
             },
             {
                 id: 13, likes: 52,
@@ -838,16 +993,30 @@
                 kategori: "network",
                 label_kategori: "Kalkulator & Rumus IP",
                 ikon: "fa-solid fa-calculator",
-                ringkasan: "Rumus menghitung Subnet Mask, Network ID, Broadcast ID, dan Host Valid disertai Kalkulator Subnetting interaktif.",
+                ringkasan: "Panduan lengkap menghitung Subnet Mask, Jumlah Subnet, Jumlah Host Valid, Network ID, dan Broadcast ID beserta Kalkulator IP.",
                 detail: `
-                    <h4>Rumus Cepat Subnetting IPv4 (Contoh Prefix /26):</h4>
-                    <ul>
-                        <li><strong>Subnet Mask:</strong> <code>255.255.255.192</code> (26 bit angka 1, sisa 6 bit angka 0).</li>
-                        <li><strong>Jumlah Host Valid:</strong> $2^6 - 2 = 62$ perangkat per subnet.</li>
-                        <li><strong>Kelipatan Blok Subnet:</strong> $256 - 192 = 64$ (Blok: 0, 64, 128, 192).</li>
-                    </ul>
+                    <p><strong>Subnetting</strong> adalah teknik memecah satu jaringan IP besar menjadi beberapa sub-jaringan (subnet) yang lebih kecil agar alokasi IP efisien dan mengurangi kemacetan trafik (<em>broadcast domain</em>).</p>
+                    <h4>Langkah Menghitung Subnetting Kelas C (Contoh: <code>192.168.1.10/26</code>):</h4>
+                    <ol>
+                        <li><strong>Konversi Prefix /26 ke Biner & Subnet Mask:</strong><br>
+                        Ada 26 bit angka 1 dari total 32 bit IPv4: <code>11111111.11111111.11111111.11000000</code><br>
+                        Nilai oktet ke-4: $128 + 64 = 192$, sehingga Subnet Mask-nya adalah <strong>255.255.255.192</strong>.</li>
+                        <li><strong>Menghitung Jumlah Subnet:</strong><br>
+                        Rumus: $2^x$ (dimana $x$ = jumlah bit 1 pada oktet terakhir). Pada /26 terdapat dua bit 1, maka $2^2 = 4$ subnet.</li>
+                        <li><strong>Menghitung Jumlah Host Valid per Subnet:</strong><br>
+                        Rumus: $2^y - 2$ (dimana $y$ = jumlah bit 0 pada oktet terakhir). Pada /26 terdapat enam bit 0, maka $2^6 - 2 = 64 - 2 = \mathbf{62\text{ host valid}}$ (dikurangi 2 karena 1 untuk Network ID dan 1 untuk Broadcast ID).</li>
+                        <li><strong>Menghitung Kelipatan Blok Subnet:</strong><br>
+                        Rumus: $256 - \text{nilai oktet subnet mask} = 256 - 192 = \mathbf{64}$.<br>
+                        Maka blok subnetnya adalah kelipatan 64: <strong>0, 64, 128, 192</strong>. Karena IP <code>192.168.1.10</code> berada di antara 0 dan 64, maka ia masuk ke blok pertama:
+                        <ul>
+                            <li><strong>Network ID:</strong> <code>192.168.1.0</code></li>
+                            <li><strong>Range IP Host Valid:</strong> <code>192.168.1.1</code> s/d <code>192.168.1.62</code></li>
+                            <li><strong>Broadcast ID:</strong> <code>192.168.1.63</code></li>
+                        </ul>
+                        </li>
+                    </ol>
                     <div class="box-panel" style="background:white;">
-                        <strong><i class="fa-solid fa-bolt"></i> Kalkulator IPv4 Otomatis:</strong>
+                        <strong><i class="fa-solid fa-bolt"></i> Kalkulator IPv4 Otomatis (Coba Hitung Langsung):</strong>
                         <div style="display:flex; gap:10px; flex-wrap:wrap; margin:10px 0;">
                             <input type="text" id="inputIp" class="form-control" style="max-width:200px;" value="192.168.1.10" placeholder="IP Address">
                             <select id="inputCidr" class="form-control" style="max-width:220px;">
@@ -872,16 +1041,17 @@
                 kategori: "server",
                 label_kategori: "Layanan Jaringan",
                 ikon: "fa-solid fa-address-book",
-                ringkasan: "Konfigurasi Bind9 di Ubuntu Server untuk menerjemahkan IP Address menjadi nama domain lokal (Forward & Reverse Zone).",
+                ringkasan: "Instalasi Bind9 di Ubuntu Server, konfigurasi Forward Zone & Reverse Zone, jenis record DNS (A, CNAME, MX), dan uji nslookup.",
                 detail: `
-                    <h4>Instalasi Bind9 di Ubuntu:</h4>
-                    <div class="code-block">sudo apt update && sudo apt install bind9 bind9utils dnsutils -y</div>
-                    <h4>Langkah Konfigurasi Utama:</h4>
-                    <ol>
-                        <li>Daftarkan nama domain (misal <code>smktkj.sch.id</code>) di file <code>/etc/bind/named.conf.local</code>.</li>
-                        <li>Salin template <code>db.local</code> menjadi <code>db.smktkj</code> dan arahkan record <strong>A</strong> ke IP Server.</li>
-                        <li>Restart layanan dengan <code>sudo systemctl restart bind9</code> dan uji memakai perintah <code>nslookup smktkj.sch.id</code>.</li>
-                    </ol>`
+                    <p><strong>DNS (Domain Name System)</strong> berfungsi menerjemahkan nama domain yang mudah diingat manusia (seperti <code>smktkj.sch.id</code>) menjadi alamat IP numerik yang dimengerti komputer.</p>
+                    <h4>1. Instalasi Paket Bind9 di Ubuntu:</h4>
+                    <div class="code-block">sudo apt update<br>sudo apt install bind9 bind9utils dnsutils -y</div>
+                    <h4>2. Mendaftarkan Zona Domain (<code>/etc/bind/named.conf.local</code>):</h4>
+                    <div class="code-block">zone "smktkj.sch.id" {<br>    type master;<br>    file "/etc/bind/db.smktkj";<br>};</div>
+                    <h4>3. Membuat File Database Forward Zone (<code>/etc/bind/db.smktkj</code>):</h4>
+                    <div class="code-block">sudo cp /etc/bind/db.local /etc/bind/db.smktkj<br><span class="code-comment"># Isi record utama di dalam file db.smktkj:</span><br>@       IN      NS      ns1.smktkj.sch.id.<br>@       IN      A       192.168.10.50<br>ns1     IN      A       192.168.10.50<br>www     IN      CNAME   smktkj.sch.id.</div>
+                    <h4>4. Verifikasi & Pengujian DNS:</h4>
+                    <div class="code-block">sudo named-checkconf<br>sudo systemctl restart bind9<br>nslookup www.smktkj.sch.id 127.0.0.1</div>`
             },
             {
                 id: 15, likes: 21,
@@ -889,12 +1059,17 @@
                 kategori: "network",
                 label_kategori: "Network Security",
                 ikon: "fa-solid fa-lock",
-                ringkasan: "Filtering paket dengan UFW Linux & MikroTik Firewall Filter Rules untuk memblokir akses ilegal.",
+                ringkasan: "Filtering paket data dengan Linux UFW, MikroTik Firewall Filter Rules (Input/Forward), serta pencegahan serangan jaringan lokal.",
                 detail: `
-                    <h4>Aturan Dasar Firewall UFW di Ubuntu:</h4>
-                    <div class="code-block">sudo ufw default deny incoming<br>sudo ufw default allow outgoing<br>sudo ufw allow 22/tcp<br>sudo ufw allow 80/tcp<br>sudo ufw enable</div>
-                    <h4>Blokir Situs / Ping di MikroTik:</h4>
-                    <div class="code-block">/ip firewall filter add chain=input protocol=icmp action=drop comment="Blokir Ping ke Router"</div>`
+                    <p>Keamanan jaringan bertujuan melindungi integritas, kerahasiaan, dan ketersediaan layanan server maupun infrastruktur router dari akses tidak sah.</p>
+                    <h4>1. Konfigurasi Firewall UFW di Linux Ubuntu:</h4>
+                    <div class="code-block"><span class="code-comment"># Blokir semua koneksi masuk secara default, izinkan keluar</span><br>sudo ufw default deny incoming<br>sudo ufw default allow outgoing<br><br><span class="code-comment"># Buka hanya port layanan yang benar-benar dibutuhkan</span><br>sudo ufw allow 22/tcp      <span class="code-comment"># SSH</span><br>sudo ufw allow 80/tcp      <span class="code-comment"># HTTP Web Server</span><br>sudo ufw allow 443/tcp     <span class="code-comment"># HTTPS</span><br>sudo ufw enable</div>
+                    <h4>2. Penerapan Firewall Filter Rules di MikroTik:</h4>
+                    <ul>
+                        <li><strong>Chain Input:</strong> Mengatur paket data yang tujuannya langsung menuju ke Router MikroTik itu sendiri (misal akses Winbox, SSH, atau Ping ke router).</li>
+                        <li><strong>Chain Forward:</strong> Mengatur paket data yang hanya melewati router dari jaringan lokal menuju internet (misal blokir akses situs tertentu oleh client).</li>
+                    </ul>
+                    <div class="code-block"><span class="code-comment"># Mencegah serangan ping flood ke interface publik router (ether1)</span><br>/ip firewall filter add chain=input in-interface=ether1 protocol=icmp action=drop comment="Drop Ping dari Publik"</div>`
             }
         ];
 
@@ -915,20 +1090,30 @@
                 .select('*')
                 .order('id', { ascending: true });
 
-            if (!error && data && data.length > 0) {
+            if (error) {
+                console.warn('Info Supabase:', error.message);
+                document.getElementById('db-status').innerHTML = `<div class="dot" style="background:#ef4444;"></div><span>Cek Tabel Supabase</span>`;
+                renderMateri();
+                return;
+            }
+
+            if (data && data.length > 0) {
                 dataMateriTKJ = data;
                 document.getElementById('db-status').innerHTML = `<div class="dot"></div><span>Supabase Terhubung (${data.length} Modul)</span>`;
-            } else if (!error && data && data.length === 0) {
-                // Jika tabel Supabase masih kosong, otomatis isi dengan 15 materi bawaan!
+            } else if (data && data.length === 0) {
+                // Otomatis unggah 15 materi lengkap ke Supabase jika tabel masih kosong
                 const dataAwal = dataMateriTKJ.map(({ id, ...rest }) => rest);
-                const { data: inserted } = await supabaseClient.from('materi_tkj').insert(dataAwal).select();
-                if (inserted) dataMateriTKJ = inserted;
+                const { data: inserted, error: insErr } = await supabaseClient.from('materi_tkj').insert(dataAwal).select();
+                if (!insErr && inserted) {
+                    dataMateriTKJ = inserted;
+                    document.getElementById('db-status').innerHTML = `<div class="dot"></div><span>Supabase Tersinkron (${inserted.length} Modul)</span>`;
+                }
             }
             renderMateri(currentFilter, document.getElementById('searchInput').value);
         }
 
         async function tambahLike(event, id) {
-            event.stopPropagation(); // Mencegah modal terbuka saat klik tombol Like
+            event.stopPropagation();
             const item = dataMateriTKJ.find(m => m.id === id);
             if (!item) return;
 
@@ -980,13 +1165,13 @@
             document.getElementById('formTambahMateri').reset();
             tutupModal('modalTambahOverlay');
             renderMateri(currentFilter, document.getElementById('searchInput').value);
-            alert('Materi berhasil ditambahkan!');
+            alert('Materi baru berhasil disimpan!');
         }
 
         async function muatKomentar(materiId) {
             const listEl = document.getElementById('daftarKomentar');
             if (!isSupabaseReady) {
-                listEl.innerHTML = `<p style="font-size:0.84rem; color:#64748b;">Hubungkan SUPABASE_URL & KEY agar kolom diskusi tersimpan ke database.</p>`;
+                listEl.innerHTML = `<p style="font-size:0.84rem; color:#64748b;">Hubungkan Supabase agar kolom diskusi tersimpan ke database.</p>`;
                 return;
             }
 
@@ -1019,7 +1204,7 @@
             }
 
             if (!isSupabaseReady) {
-                alert('Isi SUPABASE_URL dan SUPABASE_ANON_KEY di kode terlebih dahulu agar komentar tersimpan!');
+                alert('Koneksi Supabase belum aktif.');
                 return;
             }
 
@@ -1070,7 +1255,7 @@
                     </div>
                     <div class="card-footer">
                         <span class="btn-baca" onclick="bukaModal(${item.id})">
-                            Buka Panduan <i class="fa-solid fa-arrow-right"></i>
+                            Baca Materi Lengkap <i class="fa-solid fa-arrow-right"></i>
                         </span>
                         <button class="btn-like" onclick="tambahLike(event, ${item.id})" title="Sukai materi ini">
                             <i class="fa-solid fa-heart" style="color:#ef4444;"></i> ${item.likes || 0}
