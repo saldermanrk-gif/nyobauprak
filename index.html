@@ -65,7 +65,6 @@
             pointer-events: none;
         }
 
-        /* Navbar */
         nav {
             position: sticky;
             top: 0;
@@ -165,7 +164,6 @@
             animation: blink 1.5s infinite;
         }
 
-        /* Hero */
         .hero {
             text-align: center;
             padding: 3rem 5% 1.5rem;
@@ -200,7 +198,6 @@
             margin-bottom: 1.5rem;
         }
 
-        /* Progress Bar Belajar */
         .progress-container {
             max-width: 650px;
             margin: 0 auto 2rem;
@@ -235,7 +232,6 @@
             transition: width 0.5s ease;
         }
 
-        /* Search & Filter */
         .controls {
             max-width: 1100px;
             margin: 0 auto 2.5rem;
@@ -303,7 +299,6 @@
             transform: translateY(-2px);
         }
 
-        /* Grid Cards */
         .container {
             max-width: 1250px;
             margin: 0 auto 4rem;
@@ -441,7 +436,6 @@
             color: #dc2626;
         }
 
-        /* Modal Overlay */
         .modal-overlay {
             position: fixed;
             top: 0; left: 0;
@@ -633,7 +627,6 @@
         .comment-item strong { color: var(--sky-primary); font-size: 0.9rem; }
         .comment-item p { font-size: 0.88rem; color: var(--text-muted); margin-top: 4px; }
 
-        /* Quiz Styling */
         .quiz-option {
             display: block;
             width: 100%;
@@ -726,7 +719,7 @@
             <input type="text" id="searchInput" placeholder="Cari materi... (contoh: MikroTik, IP, Ubuntu, Fiber Optik, Cisco)">
         </div>
         <div class="filter-buttons">
-            <button class="filter-btn active" data-filter="all">Semua Materi (18)</button>
+            <button class="filter-btn active" data-filter="all" id="btnAllMateri">Semua Materi</button>
             <button class="filter-btn" data-filter="hardware">Hardware & OS</button>
             <button class="filter-btn" data-filter="server">Linux & Server</button>
             <button class="filter-btn" data-filter="network">Jaringan & Routing</button>
@@ -1230,7 +1223,6 @@
             }
 
             if (data && data.length > 0) {
-                // Filter otomatis untuk mencegah duplikat judul tampil di layar
                 const unikMap = new Map();
                 data.forEach(item => {
                     if (!unikMap.has(item.judul)) {
@@ -1366,6 +1358,7 @@
         // ========================================================
         function renderMateri(filterKategori = 'all', keyword = '') {
             const gridEl = document.getElementById('materiGrid');
+            document.getElementById('btnAllMateri').textContent = `Semua Materi (${dataMateriTKJ.length})`;
             gridEl.innerHTML = '';
 
             const filtered = dataMateriTKJ.filter(item => {
@@ -1422,7 +1415,6 @@
             const modalBody = document.getElementById('modalBody');
             modalBody.innerHTML = item.detail;
 
-            // Otomatis tambahkan tombol "Salin" di setiap blok kode
             modalBody.querySelectorAll('.code-block').forEach((block) => {
                 const wrapper = document.createElement('div');
                 wrapper.className = 'code-wrapper';
@@ -1452,7 +1444,6 @@
             document.getElementById(overlayId).classList.remove('active');
         }
 
-        // Kuis TKJ Interaktif
         let jawabanUser = {};
         function bukaModalKuis() {
             jawabanUser = {};
@@ -1499,14 +1490,12 @@
             `;
         }
 
-        // Toggle Tema Siang / Malam
         function toggleTheme() {
             document.body.classList.toggle('dark-sky');
             const isDark = document.body.classList.contains('dark-sky');
             document.getElementById('themeBtn').innerHTML = isDark ? '<i class="fa-solid fa-sun"></i>' : '<i class="fa-solid fa-moon"></i>';
         }
 
-        // Filter & Search Event
         document.querySelectorAll('.filter-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
@@ -1520,7 +1509,6 @@
             renderMateri(currentFilter, e.target.value);
         });
 
-        // Kalkulator Subnetting IPv4
         function hitungSubnet() {
             const ipStr = document.getElementById('inputIp').value.trim();
             const cidr = parseInt(document.getElementById('inputCidr').value);
